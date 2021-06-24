@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
-  List pages = [ResumenPage(), HistorialPage(), ResumenPage()];
+  List pages = [Resumen(), HistorialPage(), Resumen()];
 
   @override
   Widget build(BuildContext context) {
