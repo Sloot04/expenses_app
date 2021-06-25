@@ -23,9 +23,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Expenses App',
-      home: Scaffold(
-        body: pages[currentIndex],
-        bottomNavigationBar: _buildBottomNavigationBar(),
+      home: SafeArea(
+        child: Scaffold(
+          body: pages[currentIndex],
+          bottomNavigationBar: _buildBottomNavigationBar(),
+        ),
       ),
     );
   }

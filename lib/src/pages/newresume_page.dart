@@ -17,16 +17,23 @@ class NewResumePage extends StatelessWidget {
             children: [
               _SaldoText(),
               Text("\$0.0"),
-              FormCustom(
-                color: Colors.green,
-                hintTextMotivo: "Motivo de su ingreso",
-                hintTextImporte: "Monto de su ingreso",
-              ),
-              SizedBox(height: 20),
-              FormCustom(
-                color: Colors.red,
-                hintTextMotivo: "Motivo de su gasto",
-                hintTextImporte: "Monto de su gasto",
+              SizedBox(height: 10.0),
+              Expanded(
+                child: ListView(
+                  children: [
+                    FormCustom(
+                      color: Colors.green,
+                      hintTextMotivo: "Motivo de su ingreso",
+                      hintTextImporte: "Monto de su ingreso",
+                    ),
+                    SizedBox(height: 20),
+                    FormCustom(
+                      color: Colors.red,
+                      hintTextMotivo: "Motivo de su gasto",
+                      hintTextImporte: "Monto de su gasto",
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
