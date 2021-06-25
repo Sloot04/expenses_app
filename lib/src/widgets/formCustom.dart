@@ -30,6 +30,7 @@ class FormCustom extends StatelessWidget {
             ),
             SizedBox(height: 15),
             TextFormField(
+             keyboardType: TextInputType.number,
               decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
