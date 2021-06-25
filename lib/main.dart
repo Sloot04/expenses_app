@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //pages
 import 'package:expenses_app/src/pages/historial_page.dart';
 import 'package:expenses_app/src/pages/resumen_page.dart';
+import 'package:expenses_app/src/pages/newresume_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,7 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
-  List pages = [Resumen(), HistorialPage(), Resumen()];
+  List pages = [Resumen(), HistorialPage(), NewResumePage()];
 
   @override
   Widget build(BuildContext context) {
