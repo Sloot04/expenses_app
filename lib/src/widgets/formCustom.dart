@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 
-class FormCustom extends StatelessWidget {
+class FormCustom extends StatefulWidget {
   final Color color;
 
   final String hintTextMotivo;
   final String hintTextImporte;
+  final bool esIngreso;
 
   const FormCustom({
     required this.color,
     required this.hintTextMotivo,
     required this.hintTextImporte,
+    required this.esIngreso,
   });
+
+  @override
+  _FormCustomState createState() => _FormCustomState();
+}
+
+class _FormCustomState extends State<FormCustom> {
+  TextEditingController _motivoController = TextEditingController(text: '');
+  TextEditingController _importeController = TextEditingController(text: '');
 
   @override
   Widget build(BuildContext context) {
@@ -19,41 +29,47 @@ class FormCustom extends StatelessWidget {
       child: Form(
         child: Column(
           children: [
-            TextFormField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: this.color)),
-                  labelText: "Motivo",
-                  labelStyle: TextStyle(color: color),
-                  hintText: hintTextMotivo),
-            ),
+            _textFormFieldCustom(_motivoController, "Motivo"),
             SizedBox(height: 15),
-            TextFormField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: this.color)),
-                  labelText: "Importe",
-                  labelStyle: TextStyle(color: color),
-                  hintText: hintTextImporte),
-            ),
+            _textFormFieldCustom(_importeController, "Importe"),
             SizedBox(height: 15),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                if (this.widget.esIngreso) {
+                  print('motivo ingreso: ${_motivoController.text}');
+                  print('importe ingreso: ${_importeController.text}');
+                } else {
+                  print('motivo gasto: ${_motivoController.text}');
+                  print('importe gasto: ${_importeController.text}');
+                }
+              },
               child: Text("Agregar",
                   style: TextStyle(color: Colors.grey.shade900, fontSize: 18)),
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(100, 30)),
                 backgroundColor:
                     MaterialStateProperty.all(Colors.grey.shade700),
-                overlayColor: MaterialStateProperty.all(color),
+                overlayColor: MaterialStateProperty.all(widget.color),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+
+  TextFormField _textFormFieldCustom(
+      TextEditingController controller, String labelText) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: this.widget.color)),
+          labelText: labelText,
+          labelStyle: TextStyle(color: widget.color),
+          hintText: widget.hintTextMotivo),
     );
   }
 }
