@@ -29,9 +29,11 @@ class _FormCustomState extends State<FormCustom> {
       child: Form(
         child: Column(
           children: [
-            _textFormFieldCustom(_motivoController, "Motivo"),
+            _textFormFieldCustom(
+                _motivoController, "Motivo", TextInputType.text),
             SizedBox(height: 15),
-            _textFormFieldCustom(_importeController, "Importe"),
+            _textFormFieldCustom(
+                _importeController, "Importe", TextInputType.number),
             SizedBox(height: 15),
             TextButton(
               onPressed: () {
@@ -60,8 +62,9 @@ class _FormCustomState extends State<FormCustom> {
   }
 
   TextFormField _textFormFieldCustom(
-      TextEditingController controller, String labelText) {
+      TextEditingController controller, String labelText, TextInputType type) {
     return TextFormField(
+      keyboardType: type,
       controller: controller,
       decoration: InputDecoration(
           border: OutlineInputBorder(),

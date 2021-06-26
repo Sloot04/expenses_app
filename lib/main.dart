@@ -23,9 +23,16 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Expenses App',
-      home: Scaffold(
-        body: pages[currentIndex],
-        bottomNavigationBar: _buildBottomNavigationBar(),
+      home: SafeArea(
+        child: GestureDetector(
+           onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+          child: Scaffold(
+            body: pages[currentIndex],
+            bottomNavigationBar: _buildBottomNavigationBar(),
+          ),
+        ),
       ),
     );
   }
