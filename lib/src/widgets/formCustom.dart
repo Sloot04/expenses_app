@@ -21,19 +21,22 @@ class FormCustom extends StatefulWidget {
 class _FormCustomState extends State<FormCustom> {
   TextEditingController _motivoController = TextEditingController(text: '');
   TextEditingController _importeController = TextEditingController(text: '');
+   final GlobalKey<FormState> _formKey= GlobalKey<FormState>();
+ 
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: Form(
+        key: _formKey,
         child: Column(
           children: [
             _textFormFieldCustom(
-                _motivoController, "Motivo", TextInputType.text),
+                _motivoController, "Motivo", TextInputType.text, true),
             SizedBox(height: 15),
             _textFormFieldCustom(
-                _importeController, "Importe", TextInputType.number),
+                _importeController, "Importe", TextInputType.number, false),
             SizedBox(height: 15),
             TextButton(
               onPressed: () {
@@ -44,6 +47,10 @@ class _FormCustomState extends State<FormCustom> {
                   print('motivo gasto: ${_motivoController.text}');
                   print('importe gasto: ${_importeController.text}');
                 }
+                if (_formKey.currentState!.validate()){
+                  _motivoController.clear();
+                  _importeController.clear();
+                } 
               },
               child: Text("Agregar",
                   style: TextStyle(color: Colors.grey.shade900, fontSize: 18)),
@@ -62,8 +69,9 @@ class _FormCustomState extends State<FormCustom> {
   }
 
   TextFormField _textFormFieldCustom(
-      TextEditingController controller, String labelText, TextInputType type) {
+      TextEditingController controller, String labelText, TextInputType type, bool esMotivo) {
     return TextFormField(
+      validator: esMotivo? validatorMotivo : validatorMonto ,
       keyboardType: type,
       controller: controller,
       decoration: InputDecoration(
@@ -75,4 +83,23 @@ class _FormCustomState extends State<FormCustom> {
           hintText: widget.hintTextMotivo),
     );
   }
+
+ String? validatorMonto(value) {
+    if (value.length == 0) {
+      return "Debe completar este campo";
+    }
+    RegExp regex = new RegExp(r'[0-9][^A-z]');
+    if (!regex.hasMatch(value)) {
+      return "Indique el monto de forma numérica";
+    }
+    return null;
+  }
+
+  String? validatorMotivo(value) {
+    if (value.length == 0) {
+      return "Debe completar este campo";
+    }
+    return null;
+  }
+
 }

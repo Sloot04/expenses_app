@@ -24,14 +24,13 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Expenses App',
       home: SafeArea(
-        child: GestureDetector(
+        /*    child: GestureDetector(
            onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
-        },
-          child: Scaffold(
-            body: pages[currentIndex],
-            bottomNavigationBar: _buildBottomNavigationBar(),
-          ),
+        }, */
+        child: Scaffold(
+          body: pages[currentIndex],
+          bottomNavigationBar: _buildBottomNavigationBar(),
         ),
       ),
     );
