@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:math_expressions/math_expressions.dart' as me;
 
 class Resumen extends StatefulWidget {
@@ -48,13 +49,18 @@ class _ResumenState extends State<Resumen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Mi saldo',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          'Mi saldo',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Colors.white,
+                          ),
+                        ),
+                      FaIcon(FontAwesomeIcons.piggyBank)
+                      ],
                     ),
                     SizedBox(
                       height: 10,

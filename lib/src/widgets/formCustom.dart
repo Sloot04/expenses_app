@@ -58,9 +58,10 @@ class _FormCustomState extends State<FormCustom> {
               child: Text("Agregar",
                   style: TextStyle(color: Colors.grey.shade900, fontSize: 18)),
               style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all(Size(100, 30)),
+                
+                fixedSize: MaterialStateProperty.all(Size(180, 40)),
                 backgroundColor:
-                    MaterialStateProperty.all(Colors.grey.shade700),
+                    MaterialStateProperty.all(widget.color.withOpacity(0.3)),
                 overlayColor: MaterialStateProperty.all(widget.color),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),

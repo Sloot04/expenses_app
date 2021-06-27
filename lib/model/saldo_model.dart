@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SaldoModel with ChangeNotifier {
-  double _currentSaldo = 0.0;
+  double _currentSaldo = 00.00;
   late double _ingreso;
   late double _gastos;
 
@@ -12,7 +12,6 @@ class SaldoModel with ChangeNotifier {
   // valor = ingreso o gasto
   set currentSaldo(double valor) {
     this._currentSaldo = valor;
-    print('modelo $currentSaldo');
     notifyListeners();
   }
 
