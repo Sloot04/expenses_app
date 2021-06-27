@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:expenses_app/model/saldo_model.dart';
 
 //pages
 import 'package:expenses_app/src/pages/historial_page.dart';
 import 'package:expenses_app/src/pages/resumen_page.dart';
 import 'package:expenses_app/src/pages/newresume_page.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SaldoModel()),
+      ],
+      child: MyApp(),
+    ));
 
 class MyApp extends StatefulWidget {
   @override

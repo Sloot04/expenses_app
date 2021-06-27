@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:expenses_app/src/widgets/formCustom.dart';
+import 'package:provider/provider.dart';
+import 'package:expenses_app/model/saldo_model.dart';
 
 class NewResumePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final currentsaldo = Provider.of<SaldoModel>(context).currentSaldo;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('NewResumen'),
@@ -16,7 +20,7 @@ class NewResumePage extends StatelessWidget {
           child: Column(
             children: [
               _SaldoText(),
-              Text("\$0.0"),
+              Text("\$$currentsaldo"),
               SizedBox(height: 10.0),
               Expanded(
                 child: ListView(
