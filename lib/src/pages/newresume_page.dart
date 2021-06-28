@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:expenses_app/src/widgets/formCustom.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +71,7 @@ class _SaldoText extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FaIcon(FontAwesomeIcons.piggyBank),
+            BounceInDown(child: FaIcon(FontAwesomeIcons.piggyBank)),
             SizedBox(width: 8.0),
             Text(
               'Mi saldo',
