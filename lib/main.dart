@@ -60,7 +60,7 @@ class _MyAppState extends State<MyApp> {
       items: [
         BottomNavigationBarItem(
           label: 'Resumen',
-          icon: FaIcon(FontAwesomeIcons.coins),
+          icon: FaIcon(FontAwesomeIcons.piggyBank),
         ),
         BottomNavigationBarItem(
           label: 'Historial',
