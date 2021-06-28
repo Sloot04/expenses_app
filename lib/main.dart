@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:expenses_app/model/saldo_model.dart';
 
 //pages
 import 'package:expenses_app/src/pages/historial_page.dart';
 import 'package:expenses_app/src/pages/resumen_page.dart';
 import 'package:expenses_app/src/pages/newresume_page.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => SaldoModel()),
+      ],
+      child: MyApp(),
+    ));
 
 class MyApp extends StatefulWidget {
   @override
@@ -16,7 +23,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
-  List pages = [Resumen(), HistorialPage(), NewResumePage()];
+  List pages = [NewResumePage(), HistorialPage(), Resumen()];
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +31,13 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Expenses App',
       home: SafeArea(
-        child: GestureDetector(
+        /*    child: GestureDetector(
            onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
-        },
-          child: Scaffold(
-            body: pages[currentIndex],
-            bottomNavigationBar: _buildBottomNavigationBar(),
-          ),
+        }, */
+        child: Scaffold(
+          body: pages[currentIndex],
+          bottomNavigationBar: _buildBottomNavigationBar(),
         ),
       ),
     );
@@ -41,7 +47,7 @@ class _MyAppState extends State<MyApp> {
   BottomNavigationBar _buildBottomNavigationBar() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.black,
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.white.withOpacity(0.5),
       selectedFontSize: 14,
