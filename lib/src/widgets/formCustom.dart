@@ -45,10 +45,17 @@ class _FormCustomState extends State<FormCustom> {
               onPressed: () {
                 if (this.widget.esIngreso) {
                   double ingreso = double.parse(_importeController.text);
+
                   saldoModel.currentSaldo = saldoModel.currentSaldo + ingreso;
+
+                  saldoModel.ultimoMovimientoMotivo = _motivoController.text;
+                  saldoModel.ultimoMovimientoMonto = ingreso;
                 } else {
                   double gasto = double.parse(_importeController.text);
                   saldoModel.currentSaldo = saldoModel.currentSaldo - gasto;
+
+                  saldoModel.ultimoMovimientoMotivo = _motivoController.text;
+                  saldoModel.ultimoMovimientoMonto = gasto;
                 }
                 if (_formKey.currentState!.validate()) {
                   _motivoController.clear();
@@ -58,7 +65,6 @@ class _FormCustomState extends State<FormCustom> {
               child: Text("Agregar",
                   style: TextStyle(color: Colors.grey.shade900, fontSize: 18)),
               style: ButtonStyle(
-                
                 fixedSize: MaterialStateProperty.all(Size(180, 40)),
                 backgroundColor:
                     MaterialStateProperty.all(widget.color.withOpacity(0.3)),

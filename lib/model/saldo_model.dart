@@ -5,9 +5,15 @@ class SaldoModel with ChangeNotifier {
   late double _ingreso;
   late double _gastos;
 
+  String _ultimoMovimientoMotivo = "";
+  double _ultimoMovimientoMonto = 0.0;
+
   double get currentSaldo => this._currentSaldo;
   double get ingreso => this._ingreso;
   double get gastos => this._gastos;
+
+  String get ultimoMovimientoMotivo => this._ultimoMovimientoMotivo;
+  double get ultimoMovimientoMonto => this._ultimoMovimientoMonto;
 
   // valor = ingreso o gasto
   set currentSaldo(double valor) {
@@ -22,6 +28,16 @@ class SaldoModel with ChangeNotifier {
 
   set gastos(double valor) {
     this._gastos = valor;
+    notifyListeners();
+  }
+
+  set ultimoMovimientoMotivo(String motivo) {
+    this._ultimoMovimientoMotivo = motivo;
+    notifyListeners();
+  }
+
+  set ultimoMovimientoMonto(double monto) {
+    this._ultimoMovimientoMonto = monto;
     notifyListeners();
   }
 }
