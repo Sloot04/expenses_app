@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:expenses_app/src/widgets/formCustom.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:expenses_app/model/saldo_model.dart';
+import 'package:expenses_app/model/movimiento_model.dart';
 
 class NewResumePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final currentsaldo = Provider.of<SaldoModel>(context).currentSaldo;
+    final currentsaldo = Provider.of<MovimientosModel>(context).saldo;
     final textStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w300);
 
     return Scaffold(
@@ -70,7 +71,7 @@ class _SaldoText extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FaIcon(FontAwesomeIcons.piggyBank),
+            BounceInDown(child: FaIcon(FontAwesomeIcons.piggyBank)),
             SizedBox(width: 8.0),
             Text(
               'Mi saldo',

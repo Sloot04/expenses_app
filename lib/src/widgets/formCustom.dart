@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:expenses_app/model/saldo_model.dart';
 import 'package:provider/provider.dart';
-//import 'package:math_expressions/math_expressions.dart' as math;
+
+import 'package:expenses_app/model/movimiento_model.dart';
 
 class FormCustom extends StatefulWidget {
   final Color color;
@@ -28,7 +28,8 @@ class _FormCustomState extends State<FormCustom> {
 
   @override
   Widget build(BuildContext context) {
-    final saldoModel = Provider.of<SaldoModel>(context);
+    final movimientos = Provider.of<MovimientosModel>(context);
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: Form(
@@ -43,13 +44,14 @@ class _FormCustomState extends State<FormCustom> {
             SizedBox(height: 15),
             TextButton(
               onPressed: () {
-                if (this.widget.esIngreso) {
-                  double ingreso = double.parse(_importeController.text);
-                  saldoModel.currentSaldo = saldoModel.currentSaldo + ingreso;
-                } else {
-                  double gasto = double.parse(_importeController.text);
-                  saldoModel.currentSaldo = saldoModel.currentSaldo - gasto;
+                double monto = double.parse(_importeController.text);
+                if (!this.widget.esIngreso) {
+                  monto = monto * (-1);
                 }
+                Movement movement =
+                    Movement(motivo: _motivoController.text, monto: monto);
+                movimientos.addMov(movement);
+
                 if (_formKey.currentState!.validate()) {
                   _motivoController.clear();
                   _importeController.clear();
@@ -58,7 +60,6 @@ class _FormCustomState extends State<FormCustom> {
               child: Text("Agregar",
                   style: TextStyle(color: Colors.grey.shade900, fontSize: 18)),
               style: ButtonStyle(
-                
                 fixedSize: MaterialStateProperty.all(Size(180, 40)),
                 backgroundColor:
                     MaterialStateProperty.all(widget.color.withOpacity(0.3)),
@@ -92,8 +93,8 @@ class _FormCustomState extends State<FormCustom> {
     if (value.length == 0) {
       return "Debe completar este campo";
     }
-    //RegExp: solo numeros, enteros y dobles, sin letras, espacios y signos
-    RegExp regex = new RegExp(r'[0-9][^A-z]');
+    //RegExp: solo numeros, enteros y dobles, sin letras, espacios ni signos
+    RegExp regex = new RegExp(r'^\d+(\.\d+){0,1}$');
     if (!regex.hasMatch(value)) {
       return "Indique el monto de forma numérica";
     }
