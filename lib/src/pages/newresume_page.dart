@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:expenses_app/src/model/movimiento_model.dart';
 import 'package:expenses_app/src/widgets/formCustom.dart';
-import 'package:expenses_app/model/movimiento_model.dart';
 
 class NewResumePage extends StatelessWidget {
   @override
