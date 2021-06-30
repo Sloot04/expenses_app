@@ -19,14 +19,16 @@ class MovimientosModel with ChangeNotifier {
 class Movement {
   String motivo;
   double monto;
+  String now;
 
-  Movement({required this.motivo, required this.monto}) {
+  Movement({required this.motivo, required this.monto, required this.now}) {
     this.motivo = motivo;
     this.monto = monto;
+    this.now = now;
   }
 
   @override
   String toString() {
-    return '{ ${this.motivo}, ${this.monto} }';
+    return '{ ${this.motivo}, ${this.monto},  }';
   }
 }

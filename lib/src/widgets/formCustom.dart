@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
@@ -47,8 +48,10 @@ class _FormCustomState extends State<FormCustom> {
                 if (!this.widget.esIngreso) {
                   monto = monto * (-1);
                 }
-                Movement movement =
-                    Movement(motivo: _motivoController.text, monto: monto);
+                Movement movement = Movement(
+                    motivo: _motivoController.text,
+                    monto: monto,
+                    now: formattedDate(DateTime.now()));
                 movimientos.addMov(movement);
 
                 if (_formKey.currentState!.validate()) {
@@ -112,5 +115,11 @@ class _FormCustomState extends State<FormCustom> {
       return "Debe completar este campo";
     }
     return null;
+  }
+
+  String formattedDate(DateTime dateTime) {
+    var formatter = new DateFormat('dd-MM-yy');
+    String formattedDate = formatter.format(dateTime);
+    return formattedDate;
   }
 }

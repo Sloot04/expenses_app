@@ -9,13 +9,14 @@ class HistorialPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final listaMovimientos =
         Provider.of<MovimientosModel>(context).listaMovimientos.reversed;
+        
 
     final TextStyle textStyleMotivoMonto =
         TextStyle(fontSize: 20, fontWeight: FontWeight.w400);
     final TextStyle textStyleMap =
         TextStyle(fontSize: 15, fontWeight: FontWeight.w200);
 
-    final double medida = MediaQuery.of(context).size.width * 0.5;
+    final double screenSize = MediaQuery.of(context).size.width * 0.5;
 
     return Scaffold(
       body: Container(
@@ -35,11 +36,9 @@ class HistorialPage extends StatelessWidget {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text(
-                              "Motivo",
-                              style: textStyleMotivoMonto,
-                            ),
+                            Text("Motivo", style: textStyleMotivoMonto),
                             Text("Monto", style: textStyleMotivoMonto),
+                            Text("Fecha", style: textStyleMotivoMonto),
                           ]),
                       Container(
                         width: double.infinity,
@@ -63,6 +62,8 @@ class HistorialPage extends StatelessWidget {
                                               style: textStyleMap),
                                           Text(movimiento.monto.toString(),
                                               style: textStyleMap),
+                                              Text(movimiento.now,
+                                              style: textStyleMap),
                                         ],
                                       ),
                                       Container(
@@ -83,7 +84,7 @@ class HistorialPage extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: medida,
+                  right: screenSize,
                   child: Container(
                     height: 300,
                     width: 1,
