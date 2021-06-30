@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import 'package:expenses_app/model/movimiento_model.dart';
+import 'package:expenses_app/src/model/movimiento_model.dart';
 
 class FormCustom extends StatefulWidget {
   final Color color;
-
   final String hintTextMotivo;
   final String hintTextImporte;
   final bool esIngreso;
@@ -48,8 +48,10 @@ class _FormCustomState extends State<FormCustom> {
                 if (!this.widget.esIngreso) {
                   monto = monto * (-1);
                 }
-                Movement movement =
-                    Movement(motivo: _motivoController.text, monto: monto);
+                Movement movement = Movement(
+                    motivo: _motivoController.text,
+                    monto: monto,
+                    now: formattedDate(DateTime.now()));
                 movimientos.addMov(movement);
 
                 if (_formKey.currentState!.validate()) {
@@ -57,8 +59,10 @@ class _FormCustomState extends State<FormCustom> {
                   _importeController.clear();
                 }
               },
-              child: Text("Agregar",
-                  style: TextStyle(color: Colors.grey.shade900, fontSize: 18)),
+              child: Text(
+                "Agregar",
+                style: TextStyle(color: Colors.grey.shade900, fontSize: 18),
+              ),
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(180, 40)),
                 backgroundColor:
@@ -66,26 +70,31 @@ class _FormCustomState extends State<FormCustom> {
                 overlayColor: MaterialStateProperty.all(widget.color),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 
-  TextFormField _textFormFieldCustom(TextEditingController controller,
-      String labelText, TextInputType type, bool esMotivo) {
+  TextFormField _textFormFieldCustom(
+    TextEditingController controller,
+    String labelText,
+    TextInputType type,
+    bool esMotivo,
+  ) {
     return TextFormField(
       validator: esMotivo ? validatorMotivo : validatorMonto,
       keyboardType: type,
       controller: controller,
       decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: this.widget.color)),
-          labelText: labelText,
-          labelStyle: TextStyle(color: widget.color),
-          hintText: widget.hintTextMotivo),
+        border: OutlineInputBorder(),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: this.widget.color)),
+        labelText: labelText,
+        labelStyle: TextStyle(color: widget.color),
+        hintText: widget.hintTextMotivo,
+      ),
     );
   }
 
@@ -106,5 +115,11 @@ class _FormCustomState extends State<FormCustom> {
       return "Debe completar este campo";
     }
     return null;
+  }
+
+  String formattedDate(DateTime dateTime) {
+    var formatter = new DateFormat('dd-MM-yy');
+    String formattedDate = formatter.format(dateTime);
+    return formattedDate;
   }
 }
