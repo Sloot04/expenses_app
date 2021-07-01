@@ -1,5 +1,7 @@
-import 'package:expenses_app/src/model/recordatorios_model.dart';
+import 'package:expenses_app/src/model/event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -8,23 +10,26 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  late Map<DateTime, List<RecordatoriosModel>> selectedRecordatorios;
+  TextEditingController _eventController = TextEditingController();
+  late Map<DateTime, List<Event>> selectedEvents;
 
-  late DateTime _focusedDay;
-  late DateTime _selectedDay;
-  CalendarFormat _format = CalendarFormat.month;
+  DateTime _focusedDay = DateTime.now();
+  DateTime _selectedDay = DateTime.now();
 
   @override
   void initState() {
-    selectedRecordatorios = {};
-    _focusedDay = DateTime.now();
-    _selectedDay = DateTime.now();
-
+    selectedEvents = {};
     super.initState();
   }
 
-  List<RecordatoriosModel> _getEventsfromDay(DateTime date) {
-    return selectedRecordatorios[date] ?? [];
+  List<Event> _getEventsfromDay(DateTime date) {
+    return selectedEvents[date] ?? [];
+  }
+
+  @override
+  void dispose() {
+    _eventController.dispose();
+    super.dispose();
   }
 
   @override
@@ -32,52 +37,76 @@ class _CalendarPageState extends State<CalendarPage> {
     return Scaffold(
       body: Column(
         children: [
-          TableCalendar(
-            firstDay: DateTime.utc(2020, 1, 1),
-            focusedDay: _focusedDay,
-            lastDay: DateTime.now().add(Duration(days: 365)),
-            daysOfWeekVisible: true,
-            startingDayOfWeek: StartingDayOfWeek.sunday,
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-              });
-            },
-            selectedDayPredicate: (DateTime day) =>
-                isSameDay(_selectedDay, day),
-            calendarFormat: _format,
-            onFormatChanged: (CalendarFormat format) {
-              setState(() => _format = format);
-            },
-            eventLoader: _getEventsfromDay,
-            //Estilos
-            headerStyle: HeaderStyle(
-              titleCentered: true,
-              headerPadding: EdgeInsets.symmetric(vertical: 35),
+          Column(
+            children: [
+              TableCalendar(
+                firstDay: DateTime.utc(2020, 1, 1),
+                focusedDay: _focusedDay,
+                lastDay: DateTime.now().add(Duration(days: 365)),
+                startingDayOfWeek: StartingDayOfWeek.sunday,
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                },
+                selectedDayPredicate: (DateTime day) =>
+                    isSameDay(_selectedDay, day),
+                eventLoader: _getEventsfromDay,
 
-              //format button
-              formatButtonVisible: true,
-              formatButtonShowsNext: false,
-              //formatButtonDecoration: BoxDecoration(color: Colors.red)
-            ),
+                //Estilos
+                headerStyle: HeaderStyle(
+                  titleCentered: true,
+                  headerPadding: EdgeInsets.symmetric(vertical: 35),
+                  formatButtonVisible: false,
+                ),
+              ),
+            ],
           ),
           TextButton(
               onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                        title: Text("Add Recordatorio"),
-                        content: Text("Enter Recordatorio Title"),
-                        actions: [
-                          TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text("Ok")),
-                          TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text("Cancel"))
-                        ],
-                      )),
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      actionsPadding: EdgeInsets.symmetric(horizontal: 15),
+                      insetPadding: EdgeInsets.symmetric(horizontal: 65),
+                      title: Text("Agregar Recordatorio"),
+                      contentPadding: EdgeInsets.all(0),
+                      contentTextStyle: TextStyle(fontSize: 0),
+                      actionsOverflowButtonSpacing: 10,
+                      actions: [
+                        TextFormField(
+                          controller: _eventController,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              if (_eventController.text.isEmpty) {
+                              } else {
+                                if (selectedEvents[_selectedDay] != null) {
+                                  selectedEvents[_selectedDay]!.add(
+                                    Event(title: _eventController.text),
+                                  );
+                                } else {
+                                  selectedEvents[_selectedDay] = [
+                                    Event(title: _eventController.text)
+                                  ];
+                                }
+                                Navigator.pop(context);
+                                _eventController.clear();
+                                setState(() {});
+                                print(selectedEvents);
+                                return;
+                              }
+                            },
+                            child: Text("Ok")),
+                        TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text("Cancel"))
+                      ],
+                    ),
+                  ),
               child: Text("Agregar Recordatorio")),
+          ..._getEventsfromDay(_selectedDay)
+              .map((Event event) => ListTile(title: Text(event.title))),
         ],
       ),
     );
