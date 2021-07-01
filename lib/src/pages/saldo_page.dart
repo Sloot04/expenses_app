@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:expenses_app/src/model/movimiento_model.dart';
 import 'package:expenses_app/src/widgets/formCustom.dart';
 
-class NewResumePage extends StatelessWidget {
+class SaldoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentsaldo = Provider.of<MovimientosModel>(context).saldo;
