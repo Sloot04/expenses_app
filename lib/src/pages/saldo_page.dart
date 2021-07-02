@@ -16,7 +16,7 @@ class SaldoPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 20),
+          margin: EdgeInsets.all(20),
           child: Column(
             children: [
               SizedBox(height: 40.0),
@@ -38,7 +38,7 @@ class SaldoPage extends StatelessWidget {
                 child: ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Text('Ingresos', style: textStyle),
                     ),
                     FormCustom(
@@ -49,7 +49,7 @@ class SaldoPage extends StatelessWidget {
                     ),
                     SizedBox(height: 20),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Text('Gastos', style: textStyle),
                     ),
                     FormCustom(
