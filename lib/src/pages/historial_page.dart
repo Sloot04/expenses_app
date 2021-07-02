@@ -15,11 +15,15 @@ class HistorialPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 20),
+          margin: EdgeInsets.all(20),
           child: Column(
             children: [
               SizedBox(height: 40.0),
-              TitleCustom(icon: FontAwesomeIcons.book, title: 'Últimos movimientos', underline: 320.0,),
+              TitleCustom(
+                icon: FontAwesomeIcons.book,
+                title: 'Últimos movimientos',
+                underline: 320.0,
+              ),
               SizedBox(height: 25.0),
               if (listaMovimiento.length == 0)
                 Text(
@@ -37,31 +41,29 @@ class HistorialPage extends StatelessWidget {
 
   Container dataTableCustom(TextStyle colorText, listaMovimiento) {
     return Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.0),
-                height: 250,
-                width: double.infinity,
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: FadeIn(
-
-                    duration: Duration(milliseconds: 300),
-                    child: DataTable(
-                      showBottomBorder: true,
-                      dividerThickness: 2,
-                      dataRowHeight: 30,
-                      headingRowColor:
-                          MaterialStateProperty.all(Colors.black87),
-                      headingRowHeight: 40,
-                      columns: [
-                        DataColumn(label: Text('Motivo', style: colorText)),
-                        DataColumn(label: Text('Monto', style: colorText)),
-                        DataColumn(label: Text('Fecha', style: colorText)),
-                      ],
-                      rows: dataRow(listaMovimiento),
-                    ),
-                  ),
-                ),
-              );
+      margin: EdgeInsets.symmetric(horizontal: 20.0),
+      height: 250,
+      width: double.infinity,
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: FadeIn(
+          duration: Duration(milliseconds: 300),
+          child: DataTable(
+            showBottomBorder: true,
+            dividerThickness: 2,
+            dataRowHeight: 30,
+            headingRowColor: MaterialStateProperty.all(Colors.black87),
+            headingRowHeight: 40,
+            columns: [
+              DataColumn(label: Text('Motivo', style: colorText)),
+              DataColumn(label: Text('Monto', style: colorText)),
+              DataColumn(label: Text('Fecha', style: colorText)),
+            ],
+            rows: dataRow(listaMovimiento),
+          ),
+        ),
+      ),
+    );
   }
 
   List<DataRow> dataRow(listaMovimiento) {
@@ -79,4 +81,3 @@ class HistorialPage extends StatelessWidget {
     return lista;
   }
 }
-

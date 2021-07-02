@@ -31,7 +31,7 @@ class _FormCustomState extends State<FormCustom> {
     final movimientos = Provider.of<MovimientosModel>(context);
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+      // margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: Form(
         key: _formKey,
         child: Column(
@@ -41,7 +41,7 @@ class _FormCustomState extends State<FormCustom> {
             SizedBox(height: 15),
             _textFormFieldCustom(
                 _importeController, "Importe", TextInputType.number, false),
-            SizedBox(height: 15),
+            SizedBox(height: 30),
             TextButton(
               onPressed: () {
                 double monto = double.parse(_importeController.text);
