@@ -13,7 +13,6 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {
   TextEditingController _eventController = TextEditingController();
   late Map<DateTime, List<Event>> selectedEvents;
-
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
 
@@ -43,70 +42,11 @@ class _CalendarPageState extends State<CalendarPage> {
             SizedBox(height: 40.0),
             TitleCustom(title: 'Recordatorios', icon: FontAwesomeIcons.clock),
             SizedBox(height: 25.0),
-            TableCalendar(
-              firstDay: DateTime.utc(2020, 1, 1),
-              focusedDay: _focusedDay,
-              lastDay: DateTime.now().add(Duration(days: 365)),
-              startingDayOfWeek: StartingDayOfWeek.sunday,
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-              },
-              selectedDayPredicate: (DateTime day) =>
-                  isSameDay(_selectedDay, day),
-              eventLoader: _getEventsfromDay,
-
-              //Estilos
-              headerStyle: HeaderStyle(
-                titleCentered: true,
-                headerPadding: EdgeInsets.symmetric(vertical: 35),
-                formatButtonVisible: false,
-              ),
-            ),
-            TextButton(
-                onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        actionsPadding: EdgeInsets.symmetric(horizontal: 15),
-                        insetPadding: EdgeInsets.symmetric(horizontal: 65),
-                        title: Text("Agregar Recordatorio"),
-                        contentPadding: EdgeInsets.all(0),
-                        contentTextStyle: TextStyle(fontSize: 0),
-                        actionsOverflowButtonSpacing: 10,
-                        actions: [
-                          TextFormField(
-                            controller: _eventController,
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                if (_eventController.text.isEmpty) {
-                                } else {
-                                  if (selectedEvents[_selectedDay] != null) {
-                                    selectedEvents[_selectedDay]!.add(
-                                      Event(title: _eventController.text),
-                                    );
-                                  } else {
-                                    selectedEvents[_selectedDay] = [
-                                      Event(title: _eventController.text)
-                                    ];
-                                  }
-                                  Navigator.pop(context);
-                                  _eventController.clear();
-                                  setState(() {});
-                                  return;
-                                }
-                              },
-                              child: Text("Ok")),
-                          TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text("Cancel"))
-                        ],
-                      ),
-                    ),
-                child: Text("Agregar Recordatorio")),
+            calendarBuilder(),
+            bottomRecordatorioBuilder(context),
             SizedBox(height: 20),
+
+            //Lista de Recordatorios
             Expanded(
               child: ListView(
                 physics: BouncingScrollPhysics(),
@@ -127,5 +67,76 @@ class _CalendarPageState extends State<CalendarPage> {
         ),
       ),
     );
+  }
+
+  TextButton bottomRecordatorioBuilder(BuildContext context) {
+    return TextButton(
+        onPressed: () => showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                actionsPadding: EdgeInsets.symmetric(horizontal: 15),
+                insetPadding: EdgeInsets.symmetric(horizontal: 65),
+                title: Text("Agregar Recordatorio"),
+                contentPadding: EdgeInsets.all(0),
+                contentTextStyle: TextStyle(fontSize: 0),
+                actionsOverflowButtonSpacing: 10,
+                actions: [
+                  TextFormField(
+                    controller: _eventController,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        if (_eventController.text.isEmpty) {
+                        } else {
+                          if (selectedEvents[_selectedDay] != null) {
+                            selectedEvents[_selectedDay]!.add(
+                              Event(title: _eventController.text),
+                            );
+                          } else {
+                            selectedEvents[_selectedDay] = [
+                              Event(title: _eventController.text)
+                            ];
+                          }
+                          Navigator.pop(context);
+                          _eventController.clear();
+                          setState(() {});
+                          return;
+                        }
+                      },
+                      child: Text("Ok")),
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text("Cancel"))
+                ],
+              ),
+            ),
+        child: Text("Agregar Recordatorio"));
+  }
+
+  TableCalendar<Event> calendarBuilder() {
+    return TableCalendar(
+        firstDay: DateTime.utc(2020, 1, 1),
+        focusedDay: _focusedDay,
+        lastDay: DateTime.now().add(Duration(days: 365)),
+        startingDayOfWeek: StartingDayOfWeek.sunday,
+        onDaySelected: (selectedDay, focusedDay) {
+          setState(() {
+            _selectedDay = selectedDay;
+            _focusedDay = focusedDay;
+          });
+        },
+        selectedDayPredicate: (DateTime day) => isSameDay(_selectedDay, day),
+        eventLoader: _getEventsfromDay,
+
+        //Estilos
+
+        headerStyle: HeaderStyle(
+          titleCentered: true,
+          headerPadding: EdgeInsets.symmetric(vertical: 35),
+          formatButtonVisible: false,
+        ),
+        calendarStyle: CalendarStyle(
+          markersMaxCount: 1,
+        ));
   }
 }
