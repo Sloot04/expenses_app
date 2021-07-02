@@ -1,3 +1,4 @@
+import 'package:expenses_app/src/widgets/title_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class HistorialPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 40.0),
-              UltimosMovimientosText(),
+              TitleCustom(icon: FontAwesomeIcons.book, title: 'Últimos movimientos', underline: 320.0,),
               SizedBox(height: 25.0),
               if (listaMovimiento.length == 0)
                 Text(
@@ -79,37 +80,3 @@ class HistorialPage extends StatelessWidget {
   }
 }
 
-class UltimosMovimientosText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-          BounceInLeft(
-            from: 130,
-            child: FaIcon(FontAwesomeIcons.book)),
-            SizedBox(width: 8.0),
-            Text(
-              "Últimos movimientos",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w300),
-            ),
-          ],
-        ),
-        Container(
-          height: 1.0,
-          width: 320.0,
-          color: Colors.grey,
-        ),
-        SizedBox(
-          height: 8.0,
-        )
-      ],
-    );
-  }
-}
