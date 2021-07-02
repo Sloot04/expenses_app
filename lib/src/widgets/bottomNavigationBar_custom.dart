@@ -30,7 +30,7 @@ class BottomNavigationBarCustom extends StatelessWidget {
           icon: FaIcon(FontAwesomeIcons.book),
         ),
         BottomNavigationBarItem(
-          label: 'Recordatorios?',
+          label: 'Recordatorios',
           icon: FaIcon(FontAwesomeIcons.clock),
         ),
       ],
