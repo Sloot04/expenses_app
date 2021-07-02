@@ -1,6 +1,7 @@
+import 'package:expenses_app/src/widgets/title_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:animate_do/animate_do.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
@@ -19,7 +20,12 @@ class SaldoPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 40.0),
-              _SaldoText(),
+              TitleCustom(
+                title: 'Mi saldo',
+                icon: FontAwesomeIcons.piggyBank,
+                underline: 180.0,
+                animated: false,
+              ),
               Text(
                 "\$${currentsaldo.toStringAsFixed(2)}",
                 style: TextStyle(
@@ -59,39 +65,6 @@ class SaldoPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SaldoText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BounceInDown(child: FaIcon(FontAwesomeIcons.piggyBank)),
-            SizedBox(width: 8.0),
-            Text(
-              'Mi saldo',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w300),
-            ),
-          ],
-        ),
-        Container(
-          height: 1.0,
-          width: 180.0,
-          color: Colors.grey,
-        ),
-        SizedBox(
-          height: 8.0,
-        )
-      ],
     );
   }
 }

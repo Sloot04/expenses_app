@@ -2,6 +2,9 @@ import 'package:expenses_app/src/model/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'package:expenses_app/src/widgets/title_custom.dart';
+
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -39,6 +42,9 @@ class _CalendarPageState extends State<CalendarPage> {
         children: [
           Column(
             children: [
+              SizedBox(height: 40.0),
+              TitleCustom(title: 'Recordatorios', icon: FontAwesomeIcons.clock),
+              SizedBox(height: 25.0),
               TableCalendar(
                 firstDay: DateTime.utc(2020, 1, 1),
                 focusedDay: _focusedDay,
