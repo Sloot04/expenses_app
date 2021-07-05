@@ -18,7 +18,11 @@ class _SaldoPageState extends State<SaldoPage> {
   Widget build(BuildContext context) {
     final currentsaldo = Provider.of<MovimientosModel>(context).saldo;
     final appTheme = Provider.of<ThemeChangerModel>(context);
-    final textStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.w300, color: appTheme.isDark ? Colors.white : Colors.black,);
+    final textStyle = TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w300,
+      color: appTheme.isDark ? Colors.white : Colors.black,
+    );
 
     return Scaffold(
       backgroundColor: appTheme.isDark ? Colors.black87 : Colors.white,
@@ -55,6 +59,9 @@ class _SaldoPageState extends State<SaldoPage> {
                       esIngreso: true,
                       hintTextMotivo: "Motivo de su ingreso",
                       hintTextImporte: "Monto de su ingreso",
+                      colorHint:
+                          appTheme.isDark ? Colors.grey.shade500 : Colors.grey,
+                      opacity: appTheme.isDark ? 0.5 : 0.3,
                     ),
                     SizedBox(height: 20),
                     Padding(
@@ -66,6 +73,9 @@ class _SaldoPageState extends State<SaldoPage> {
                       color: Colors.red,
                       hintTextMotivo: "Motivo de su gasto",
                       hintTextImporte: "Monto de su gasto",
+                      colorHint:
+                          appTheme.isDark ? Colors.grey.shade500 : Colors.grey,
+                      opacity: appTheme.isDark ? 0.5 : 0.3,
                     ),
                   ],
                 ),
