@@ -62,6 +62,7 @@ class _SaldoPageState extends State<SaldoPage> {
                       colorHint:
                           appTheme.isDark ? Colors.grey.shade500 : Colors.grey,
                       opacity: appTheme.isDark ? 0.5 : 0.3,
+                      textColor: appTheme.isDark ? Colors.white : Colors.black,
                     ),
                     SizedBox(height: 20),
                     Padding(
@@ -71,6 +72,7 @@ class _SaldoPageState extends State<SaldoPage> {
                     FormCustom(
                       esIngreso: false,
                       color: Colors.red,
+                      textColor: appTheme.isDark ? Colors.white : Colors.black,
                       hintTextMotivo: "Motivo de su gasto",
                       hintTextImporte: "Monto de su gasto",
                       colorHint:
