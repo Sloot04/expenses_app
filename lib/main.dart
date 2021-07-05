@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
 import 'package:expenses_app/src/model/bottomNavigation_model.dart';
+import 'package:expenses_app/src/model/dark_model.dart';
 import 'package:expenses_app/src/widgets/bottomNavigationBar_custom.dart';
 
 void main() => runApp(
@@ -10,6 +12,7 @@ void main() => runApp(
         providers: [
           ChangeNotifierProvider(create: (_) => MovimientosModel()),
           ChangeNotifierProvider(create: (_) => BottomNavigationModel()),
+          ChangeNotifierProvider(create: (_) => ThemeChangerModel()),
         ],
         child: MyApp(),
       ),

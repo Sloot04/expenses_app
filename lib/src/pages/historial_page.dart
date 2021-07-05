@@ -22,7 +22,7 @@ class HistorialPage extends StatelessWidget {
               TitleCustom(
                 icon: FontAwesomeIcons.book,
                 title: 'Últimos movimientos',
-                underline: 320.0,
+                underline: 320.0, titleColor: Colors.black,
               ),
               SizedBox(height: 25.0),
               if (listaMovimiento.length == 0)

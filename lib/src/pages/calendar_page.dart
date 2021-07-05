@@ -40,7 +40,7 @@ class _CalendarPageState extends State<CalendarPage> {
         child: Column(
           children: [
             SizedBox(height: 40.0),
-            TitleCustom(title: 'Recordatorios', icon: FontAwesomeIcons.clock),
+            TitleCustom(title: 'Recordatorios', icon: FontAwesomeIcons.clock, titleColor: Colors.black,),
             SizedBox(height: 25.0),
             calendarBuilder(),
             bottomRecordatorioBuilder(context),
