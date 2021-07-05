@@ -90,6 +90,7 @@ class _FormCustomState extends State<FormCustom> {
     bool esMotivo,
   ) {
     return TextFormField(
+      cursorColor: widget.textColor,
       style: TextStyle(color: widget.textColor),
       validator: esMotivo ? validatorMotivo : validatorMonto,
       keyboardType: type,

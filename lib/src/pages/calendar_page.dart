@@ -1,8 +1,10 @@
-import 'package:expenses_app/src/model/event.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:expenses_app/src/model/theme_changer_model.dart';
+import 'package:expenses_app/src/model/event.dart';
 import 'package:expenses_app/src/widgets/title_custom.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -34,13 +36,19 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Provider.of<ThemeChangerModel>(context).isDark;
     return Scaffold(
+      backgroundColor: isDark ? Colors.black87 : Colors.white,
       body: Container(
         margin: EdgeInsets.all(20),
         child: Column(
           children: [
             SizedBox(height: 40.0),
-            TitleCustom(title: 'Recordatorios', icon: FontAwesomeIcons.clock, titleColor: Colors.black,),
+            TitleCustom(
+              title: 'Recordatorios',
+              icon: FontAwesomeIcons.clock,
+              titleColor: isDark ? Colors.white : Colors.black,
+            ),
             SizedBox(height: 25.0),
             calendarBuilder(),
             bottomRecordatorioBuilder(context),
@@ -70,47 +78,78 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   TextButton bottomRecordatorioBuilder(BuildContext context) {
+    final isDark = Provider.of<ThemeChangerModel>(context).isDark;
     return TextButton(
         onPressed: () => showDialog(
               context: context,
               builder: (context) => AlertDialog(
+                 
+                backgroundColor: isDark ? Colors.grey.shade800 : Colors.white,
                 actionsPadding: EdgeInsets.symmetric(horizontal: 15),
                 insetPadding: EdgeInsets.symmetric(horizontal: 65),
-                title: Text("Agregar Recordatorio"),
+                title: Text(
+                  "Agregar Recordatorio",
+                  style: TextStyle(
+                      color: isDark ? Colors.white : Colors.black,
+                      fontWeight: FontWeight.w300),
+                ),
                 contentPadding: EdgeInsets.all(0),
                 contentTextStyle: TextStyle(fontSize: 0),
                 actionsOverflowButtonSpacing: 10,
                 actions: [
                   TextFormField(
+                    cursorColor: isDark? Colors.white : Colors.black,
+                     style: TextStyle(color: isDark? Colors.white : Colors.black),
+                    decoration: InputDecoration(
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: isDark? Colors.white : Colors.black)),
+                    ),
                     controller: _eventController,
                   ),
-                  TextButton(
-                      onPressed: () {
-                        if (_eventController.text.isEmpty) {
-                        } else {
-                          if (selectedEvents[_selectedDay] != null) {
-                            selectedEvents[_selectedDay]!.add(
-                              Event(title: _eventController.text),
-                            );
-                          } else {
-                            selectedEvents[_selectedDay] = [
-                              Event(title: _eventController.text)
-                            ];
-                          }
-                          Navigator.pop(context);
-                          _eventController.clear();
-                          setState(() {});
-                          return;
-                        }
-                      },
-                      child: Text("Ok")),
-                  TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text("Cancel"))
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text("Cancel",
+                              style: TextStyle(
+                                  color:
+                                      isDark ? Colors.white : Colors.black))),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            if (_eventController.text.isEmpty) {
+                            } else {
+                              if (selectedEvents[_selectedDay] != null) {
+                                selectedEvents[_selectedDay]!.add(
+                                  Event(title: _eventController.text),
+                                );
+                              } else {
+                                selectedEvents[_selectedDay] = [
+                                  Event(title: _eventController.text)
+                                ];
+                              }
+                              Navigator.pop(context);
+                              _eventController.clear();
+                              setState(() {});
+                              return;
+                            }
+                          },
+                          child: Text("Ok",
+                              style: TextStyle(
+                                  color:
+                                      isDark ? Colors.white : Colors.black))),
+                    ],
+                  ),
                 ],
               ),
             ),
-        child: Text("Agregar Recordatorio"));
+        child: Text("Agregar Recordatorio",
+            style: TextStyle(
+                color: isDark ? Colors.white : Colors.black,
+                fontWeight: FontWeight.w300)));
   }
 
   TableCalendar<Event> calendarBuilder() {
