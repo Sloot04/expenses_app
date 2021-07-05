@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
 import 'package:expenses_app/src/model/bottomNavigation_model.dart';
-import 'package:expenses_app/src/model/dark_model.dart';
+import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/widgets/bottomNavigationBar_custom.dart';
 
 void main() => runApp(

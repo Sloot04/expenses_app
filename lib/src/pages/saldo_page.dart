@@ -1,4 +1,4 @@
-import 'package:expenses_app/src/model/dark_model.dart';
+import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/widgets/title_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
