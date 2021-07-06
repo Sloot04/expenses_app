@@ -6,6 +6,7 @@ import 'package:expenses_app/src/model/movimiento_model.dart';
 import 'package:expenses_app/src/model/bottomNavigation_model.dart';
 import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/widgets/bottomNavigationBar_custom.dart';
+import 'package:expenses_app/src/model/event_model.dart';
 
 void main() => runApp(
       MultiProvider(
@@ -13,6 +14,7 @@ void main() => runApp(
           ChangeNotifierProvider(create: (_) => MovimientosModel()),
           ChangeNotifierProvider(create: (_) => BottomNavigationModel()),
           ChangeNotifierProvider(create: (_) => ThemeChangerModel()),
+          ChangeNotifierProvider(create: (_) => EventModel()),
         ],
         child: MyApp(),
       ),
