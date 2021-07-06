@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'package:expenses_app/src/model/theme_changer_model.dart';
-import 'package:expenses_app/src/model/event.dart';
-import 'package:expenses_app/src/widgets/title_custom.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import 'package:expenses_app/src/model/theme_changer_model.dart';
+import 'package:expenses_app/src/model/event_model.dart';
+import 'package:expenses_app/src/widgets/title_custom.dart';
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -13,30 +13,17 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  TextEditingController _eventController = TextEditingController();
-  late Map<DateTime, List<Event>> selectedEvents;
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
 
   @override
-  void initState() {
-    selectedEvents = {};
-    super.initState();
-  }
-
-  List<Event> _getEventsfromDay(DateTime date) {
-    return selectedEvents[date] ?? [];
-  }
-
-  @override
-  void dispose() {
-    _eventController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeChangerModel>(context);
+    final selectedEvents = Provider.of<EventModel>(context).selectedEvents;
+    List<Event> getEventsfromDay(DateTime date) {
+      return selectedEvents[date] ?? [];
+    }
+
     return Scaffold(
       backgroundColor: colors.backgroundColor,
       body: Container(
@@ -59,11 +46,19 @@ class _CalendarPageState extends State<CalendarPage> {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: [
-                  ..._getEventsfromDay(_selectedDay).map(
+                  ...getEventsfromDay(_selectedDay).map(
                     (Event event) => Column(
                       children: [
-                        Text(event.title, style: TextStyle(fontSize: 18, color: colors.titleColor, fontWeight: FontWeight.w300)),
-                        Divider(indent: 60, endIndent: 60, color: colors.titleColor.withOpacity(0.7),),
+                        Text(event.title,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: colors.titleColor,
+                                fontWeight: FontWeight.w300)),
+                        Divider(
+                          indent: 60,
+                          endIndent: 60,
+                          color: colors.titleColor.withOpacity(0.7),
+                        ),
                       ],
                     ),
                   ),
@@ -80,6 +75,9 @@ class _CalendarPageState extends State<CalendarPage> {
   TextButton bottomRecordatorioBuilder(BuildContext context) {
     final isDark = Provider.of<ThemeChangerModel>(context).isDark;
     final colors = Provider.of<ThemeChangerModel>(context);
+    final eventController = Provider.of<EventModel>(context).eventController;
+    final selectedEvents = Provider.of<EventModel>(context).selectedEvents;
+
     return TextButton(
         onPressed: () => showDialog(
               context: context,
@@ -103,7 +101,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: colors.titleColor)),
                     ),
-                    controller: _eventController,
+                    controller: eventController,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -117,19 +115,19 @@ class _CalendarPageState extends State<CalendarPage> {
                       ),
                       TextButton(
                           onPressed: () {
-                            if (_eventController.text.isEmpty) {
+                            if (eventController.text.isEmpty) {
                             } else {
                               if (selectedEvents[_selectedDay] != null) {
                                 selectedEvents[_selectedDay]!.add(
-                                  Event(title: _eventController.text),
+                                  Event(title: eventController.text),
                                 );
                               } else {
                                 selectedEvents[_selectedDay] = [
-                                  Event(title: _eventController.text)
+                                  Event(title: eventController.text)
                                 ];
                               }
                               Navigator.pop(context);
-                              _eventController.clear();
+                              eventController.clear();
                               setState(() {});
                               return;
                             }
@@ -148,6 +146,12 @@ class _CalendarPageState extends State<CalendarPage> {
 
   TableCalendar<Event> calendarBuilder() {
     final colors = Provider.of<ThemeChangerModel>(context);
+    final selectedEvents = Provider.of<EventModel>(context).selectedEvents;
+
+    List<Event> getEventsfromDay(DateTime date) {
+      return selectedEvents[date] ?? [];
+    }
+
     return TableCalendar(
         firstDay: DateTime.utc(2020, 1, 1),
         weekendDays: [DateTime.sunday],
@@ -161,7 +165,7 @@ class _CalendarPageState extends State<CalendarPage> {
           });
         },
         selectedDayPredicate: (DateTime day) => isSameDay(_selectedDay, day),
-        eventLoader: _getEventsfromDay,
+        eventLoader: getEventsfromDay,
 
         //Estilos
 
@@ -180,13 +184,18 @@ class _CalendarPageState extends State<CalendarPage> {
           formatButtonVisible: false,
         ),
         calendarStyle: CalendarStyle(
-          todayDecoration: BoxDecoration(color: Colors.green.withOpacity(colors.opacity), shape: BoxShape.circle),
-          selectedDecoration: BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+          todayDecoration: BoxDecoration(
+              color: Colors.green.withOpacity(colors.opacity),
+              shape: BoxShape.circle),
+          selectedDecoration:
+              BoxDecoration(color: Colors.green, shape: BoxShape.circle),
           outsideTextStyle: TextStyle(color: Colors.grey.shade500),
           defaultTextStyle:
               TextStyle(color: colors.titleColor.withOpacity(0.8)),
           weekendTextStyle: TextStyle(color: Colors.red.shade300),
           markersMaxCount: 1,
+          markerDecoration:
+              BoxDecoration(color: colors.titleColor, shape: BoxShape.circle),
         ));
   }
 }
