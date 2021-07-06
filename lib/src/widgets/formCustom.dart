@@ -6,15 +6,21 @@ import 'package:expenses_app/src/model/movimiento_model.dart';
 
 class FormCustom extends StatefulWidget {
   final Color color;
+  final Color colorHint;
+  final Color textColor;
   final String hintTextMotivo;
   final String hintTextImporte;
   final bool esIngreso;
+  final double opacity;
 
   const FormCustom({
     required this.color,
     required this.hintTextMotivo,
     required this.hintTextImporte,
     required this.esIngreso,
+    required this.colorHint,
+    required this.opacity,
+    required this.textColor,
   });
 
   @override
@@ -65,8 +71,8 @@ class _FormCustomState extends State<FormCustom> {
               ),
               style: ButtonStyle(
                 fixedSize: MaterialStateProperty.all(Size(180, 40)),
-                backgroundColor:
-                    MaterialStateProperty.all(widget.color.withOpacity(0.3)),
+                backgroundColor: MaterialStateProperty.all(
+                    widget.color.withOpacity(widget.opacity)),
                 overlayColor: MaterialStateProperty.all(widget.color),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
@@ -84,17 +90,20 @@ class _FormCustomState extends State<FormCustom> {
     bool esMotivo,
   ) {
     return TextFormField(
+      cursorColor: widget.textColor,
+      style: TextStyle(color: widget.textColor),
       validator: esMotivo ? validatorMotivo : validatorMonto,
       keyboardType: type,
       controller: controller,
       decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: this.widget.color)),
-        labelText: labelText,
-        labelStyle: TextStyle(color: widget.color),
-        hintText: widget.hintTextMotivo,
-      ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: widget.colorHint)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: this.widget.color)),
+          labelText: labelText,
+          labelStyle: TextStyle(color: widget.color),
+          hintText: widget.hintTextMotivo,
+          hintStyle: TextStyle(color: widget.colorHint)),
     );
   }
 

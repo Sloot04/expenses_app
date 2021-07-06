@@ -7,12 +7,14 @@ class TitleCustom extends StatelessWidget {
   final IconData icon;
   final double underline;
   final bool animated;
+  final Color titleColor;
 
   TitleCustom({
     required this.title,
     required this.icon,
     this.underline = 250.0,
     this.animated = true,
+    required this.titleColor,
   });
   @override
   Widget build(BuildContext context) {
@@ -22,15 +24,15 @@ class TitleCustom extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             animated
-                ? BounceInLeft(from: 130, child: FaIcon(this.icon))
-                : BounceInDown(child: FaIcon(this.icon)),
+                ? BounceInLeft(from: 130, child: FaIcon(this.icon, color: this.titleColor,))
+                : BounceInDown(child: FaIcon(this.icon, color: this.titleColor,)),
             SizedBox(width: 8.0),
             Text(
               this.title,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 25,
-                  color: Colors.black,
+                  color: this.titleColor,
                   fontWeight: FontWeight.w300),
             ),
           ],

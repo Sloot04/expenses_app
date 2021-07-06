@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
+import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HistorialPage extends StatelessWidget {
@@ -11,8 +12,10 @@ class HistorialPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final listaMovimiento =
         Provider.of<MovimientosModel>(context).listaMovimientos.reversed;
+    final colors = Provider.of<ThemeChangerModel>(context);
     final colorText = TextStyle(color: Colors.white);
     return Scaffold(
+      backgroundColor: colors.backgroundColor,
       body: Center(
         child: Container(
           margin: EdgeInsets.all(20),
@@ -23,6 +26,7 @@ class HistorialPage extends StatelessWidget {
                 icon: FontAwesomeIcons.book,
                 title: 'Últimos movimientos',
                 underline: 320.0,
+                titleColor: colors.titleColor,
               ),
               SizedBox(height: 25.0),
               if (listaMovimiento.length == 0)
@@ -31,7 +35,7 @@ class HistorialPage extends StatelessWidget {
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
               if (listaMovimiento.length > 0)
-                dataTableCustom(colorText, listaMovimiento),
+                dataTableCustom(colorText, listaMovimiento, context),
             ],
           ),
         ),
@@ -39,7 +43,7 @@ class HistorialPage extends StatelessWidget {
     );
   }
 
-  Container dataTableCustom(TextStyle colorText, listaMovimiento) {
+  Container dataTableCustom(TextStyle colorText, listaMovimiento, context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       height: 250,
@@ -52,30 +56,38 @@ class HistorialPage extends StatelessWidget {
             showBottomBorder: true,
             dividerThickness: 2,
             dataRowHeight: 30,
-            headingRowColor: MaterialStateProperty.all(Colors.black87),
+            headingRowColor: MaterialStateProperty.all(Colors.black),
             headingRowHeight: 40,
             columns: [
               DataColumn(label: Text('Motivo', style: colorText)),
               DataColumn(label: Text('Monto', style: colorText)),
               DataColumn(label: Text('Fecha', style: colorText)),
             ],
-            rows: dataRow(listaMovimiento),
+            rows: dataRow(listaMovimiento, context),
           ),
         ),
       ),
     );
   }
 
-  List<DataRow> dataRow(listaMovimiento) {
+  List<DataRow> dataRow(listaMovimiento, context) {
+    final isDark = Provider.of<ThemeChangerModel>(context).isDark;
+    final colors = Provider.of<ThemeChangerModel>(context);
+    final textStyle =
+        TextStyle(color: Colors.white, fontWeight: FontWeight.w300);
     final List<DataRow> lista = listaMovimiento.map<DataRow>((movimiento) {
       return DataRow(
           color: (movimiento.monto.toString()[0] == '-')
-              ? MaterialStateProperty.all(Colors.red.withOpacity(0.2))
-              : MaterialStateProperty.all(Colors.green.withOpacity(0.2)),
+              ? MaterialStateProperty.all(Colors.red.withOpacity(colors.opacity))
+              : MaterialStateProperty.all(Colors.green.withOpacity(colors.opacity)),
           cells: <DataCell>[
-            DataCell(Text(movimiento.motivo)),
-            DataCell(Text('\$' + movimiento.monto.toString())),
-            DataCell(Text(movimiento.now)),
+            DataCell(Text(
+              movimiento.motivo,
+              style: isDark ? textStyle : null,
+            )),
+            DataCell(Text('\$' + movimiento.monto.toString(),
+                style: isDark ? textStyle : null)),
+            DataCell(Text(movimiento.now, style: isDark ? textStyle : null)),
           ]);
     }).toList();
     return lista;
