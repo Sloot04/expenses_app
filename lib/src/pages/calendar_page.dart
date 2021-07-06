@@ -19,10 +19,9 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeChangerModel>(context);
-    final selectedEvents = Provider.of<EventModel>(context).selectedEvents;
-    List<Event> getEventsfromDay(DateTime date) {
-      return selectedEvents[date] ?? [];
-    }
+
+    final getEventsfromDay =
+        Provider.of<EventModel>(context).getEventsfromDay(_selectedDay);
 
     return Scaffold(
       backgroundColor: colors.backgroundColor,
@@ -46,7 +45,7 @@ class _CalendarPageState extends State<CalendarPage> {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: [
-                  ...getEventsfromDay(_selectedDay).map(
+                  ...getEventsfromDay.map(
                     (Event event) => Column(
                       children: [
                         Text(event.title,
@@ -146,11 +145,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
   TableCalendar<Event> calendarBuilder() {
     final colors = Provider.of<ThemeChangerModel>(context);
-    final selectedEvents = Provider.of<EventModel>(context).selectedEvents;
-
-    List<Event> getEventsfromDay(DateTime date) {
-      return selectedEvents[date] ?? [];
-    }
+    final eventModel = Provider.of<EventModel>(context);
 
     return TableCalendar(
         firstDay: DateTime.utc(2020, 1, 1),
@@ -165,7 +160,8 @@ class _CalendarPageState extends State<CalendarPage> {
           });
         },
         selectedDayPredicate: (DateTime day) => isSameDay(_selectedDay, day),
-        eventLoader: getEventsfromDay,
+        eventLoader: (_selectedDay) =>
+            eventModel.getEventsfromDay(_selectedDay),
 
         //Estilos
 

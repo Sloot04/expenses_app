@@ -19,6 +19,10 @@ class EventModel with ChangeNotifier {
     this._eventController = controller;
     notifyListeners();
   }
+
+  List<Event> getEventsfromDay(DateTime date) {
+    return selectedEvents[date] ?? [];
+  }
 }
 
 class Event {
