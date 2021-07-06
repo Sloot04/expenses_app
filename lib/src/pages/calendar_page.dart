@@ -36,9 +36,9 @@ class _CalendarPageState extends State<CalendarPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Provider.of<ThemeChangerModel>(context).isDark;
+    final colors = Provider.of<ThemeChangerModel>(context);
     return Scaffold(
-      backgroundColor: isDark ? Colors.black87 : Colors.white,
+      backgroundColor: colors.backgroundColor,
       body: Container(
         margin: EdgeInsets.all(20),
         child: Column(
@@ -47,7 +47,7 @@ class _CalendarPageState extends State<CalendarPage> {
             TitleCustom(
               title: 'Recordatorios',
               icon: FontAwesomeIcons.clock,
-              titleColor: isDark ? Colors.white : Colors.black,
+              titleColor: colors.titleColor,
             ),
             SizedBox(height: 25.0),
             calendarBuilder(),
@@ -62,8 +62,8 @@ class _CalendarPageState extends State<CalendarPage> {
                   ..._getEventsfromDay(_selectedDay).map(
                     (Event event) => Column(
                       children: [
-                        Text(event.title, style: TextStyle(fontSize: 18)),
-                        Divider(indent: 60, endIndent: 60),
+                        Text(event.title, style: TextStyle(fontSize: 18, color: colors.titleColor, fontWeight: FontWeight.w300)),
+                        Divider(indent: 60, endIndent: 60, color: colors.titleColor.withOpacity(0.7),),
                       ],
                     ),
                   ),
@@ -79,30 +79,29 @@ class _CalendarPageState extends State<CalendarPage> {
 
   TextButton bottomRecordatorioBuilder(BuildContext context) {
     final isDark = Provider.of<ThemeChangerModel>(context).isDark;
+    final colors = Provider.of<ThemeChangerModel>(context);
     return TextButton(
         onPressed: () => showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                 
                 backgroundColor: isDark ? Colors.grey.shade800 : Colors.white,
                 actionsPadding: EdgeInsets.symmetric(horizontal: 15),
                 insetPadding: EdgeInsets.symmetric(horizontal: 65),
                 title: Text(
                   "Agregar Recordatorio",
                   style: TextStyle(
-                      color: isDark ? Colors.white : Colors.black,
-                      fontWeight: FontWeight.w300),
+                      color: colors.titleColor, fontWeight: FontWeight.w300),
                 ),
                 contentPadding: EdgeInsets.all(0),
                 contentTextStyle: TextStyle(fontSize: 0),
                 actionsOverflowButtonSpacing: 10,
                 actions: [
                   TextFormField(
-                    cursorColor: isDark? Colors.white : Colors.black,
-                     style: TextStyle(color: isDark? Colors.white : Colors.black),
+                    cursorColor: colors.titleColor,
+                    style: TextStyle(color: colors.titleColor),
                     decoration: InputDecoration(
                       focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: isDark? Colors.white : Colors.black)),
+                          borderSide: BorderSide(color: colors.titleColor)),
                     ),
                     controller: _eventController,
                   ),
@@ -112,9 +111,7 @@ class _CalendarPageState extends State<CalendarPage> {
                       TextButton(
                           onPressed: () => Navigator.pop(context),
                           child: Text("Cancel",
-                              style: TextStyle(
-                                  color:
-                                      isDark ? Colors.white : Colors.black))),
+                              style: TextStyle(color: colors.titleColor))),
                       SizedBox(
                         width: 5,
                       ),
@@ -138,9 +135,7 @@ class _CalendarPageState extends State<CalendarPage> {
                             }
                           },
                           child: Text("Ok",
-                              style: TextStyle(
-                                  color:
-                                      isDark ? Colors.white : Colors.black))),
+                              style: TextStyle(color: colors.titleColor))),
                     ],
                   ),
                 ],
@@ -148,13 +143,14 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
         child: Text("Agregar Recordatorio",
             style: TextStyle(
-                color: isDark ? Colors.white : Colors.black,
-                fontWeight: FontWeight.w300)));
+                color: colors.titleColor, fontWeight: FontWeight.w300)));
   }
 
   TableCalendar<Event> calendarBuilder() {
+    final colors = Provider.of<ThemeChangerModel>(context);
     return TableCalendar(
         firstDay: DateTime.utc(2020, 1, 1),
+        weekendDays: [DateTime.sunday],
         focusedDay: _focusedDay,
         lastDay: DateTime.now().add(Duration(days: 365)),
         startingDayOfWeek: StartingDayOfWeek.sunday,
@@ -170,11 +166,26 @@ class _CalendarPageState extends State<CalendarPage> {
         //Estilos
 
         headerStyle: HeaderStyle(
+          leftChevronIcon: Icon(
+            Icons.chevron_left,
+            color: colors.titleColor,
+          ),
+          rightChevronIcon: Icon(
+            Icons.chevron_right,
+            color: colors.titleColor,
+          ),
           titleCentered: true,
+          titleTextStyle: TextStyle(color: colors.titleColor),
           headerPadding: EdgeInsets.symmetric(vertical: 35),
           formatButtonVisible: false,
         ),
         calendarStyle: CalendarStyle(
+          todayDecoration: BoxDecoration(color: Colors.green.withOpacity(colors.opacity), shape: BoxShape.circle),
+          selectedDecoration: BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+          outsideTextStyle: TextStyle(color: Colors.grey.shade500),
+          defaultTextStyle:
+              TextStyle(color: colors.titleColor.withOpacity(0.8)),
+          weekendTextStyle: TextStyle(color: Colors.red.shade300),
           markersMaxCount: 1,
         ));
   }

@@ -12,10 +12,10 @@ class HistorialPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final listaMovimiento =
         Provider.of<MovimientosModel>(context).listaMovimientos.reversed;
-    final isDark = Provider.of<ThemeChangerModel>(context).isDark;
+    final colors = Provider.of<ThemeChangerModel>(context);
     final colorText = TextStyle(color: Colors.white);
     return Scaffold(
-      backgroundColor: isDark ? Colors.black87 : Colors.white,
+      backgroundColor: colors.backgroundColor,
       body: Center(
         child: Container(
           margin: EdgeInsets.all(20),
@@ -26,7 +26,7 @@ class HistorialPage extends StatelessWidget {
                 icon: FontAwesomeIcons.book,
                 title: 'Últimos movimientos',
                 underline: 320.0,
-                titleColor: isDark ? Colors.white : Colors.black,
+                titleColor: colors.titleColor,
               ),
               SizedBox(height: 25.0),
               if (listaMovimiento.length == 0)
@@ -72,17 +72,14 @@ class HistorialPage extends StatelessWidget {
 
   List<DataRow> dataRow(listaMovimiento, context) {
     final isDark = Provider.of<ThemeChangerModel>(context).isDark;
+    final colors = Provider.of<ThemeChangerModel>(context);
     final textStyle =
         TextStyle(color: Colors.white, fontWeight: FontWeight.w300);
     final List<DataRow> lista = listaMovimiento.map<DataRow>((movimiento) {
       return DataRow(
           color: (movimiento.monto.toString()[0] == '-')
-              ? MaterialStateProperty.all(isDark
-                  ? Colors.red.withOpacity(0.7)
-                  : Colors.red.withOpacity(0.4))
-              : MaterialStateProperty.all(isDark
-                  ? Colors.green.withOpacity(0.7)
-                  : Colors.green.withOpacity(0.4)),
+              ? MaterialStateProperty.all(Colors.red.withOpacity(colors.opacity))
+              : MaterialStateProperty.all(Colors.green.withOpacity(colors.opacity)),
           cells: <DataCell>[
             DataCell(Text(
               movimiento.motivo,

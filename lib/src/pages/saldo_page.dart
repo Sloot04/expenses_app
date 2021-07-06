@@ -25,7 +25,7 @@ class _SaldoPageState extends State<SaldoPage> {
     );
 
     return Scaffold(
-      backgroundColor: appTheme.isDark ? Colors.black87 : Colors.white,
+      backgroundColor: appTheme.backgroundColor,
       body: Center(
         child: Container(
           margin: EdgeInsets.all(20),
@@ -37,7 +37,7 @@ class _SaldoPageState extends State<SaldoPage> {
                 icon: FontAwesomeIcons.piggyBank,
                 underline: 180.0,
                 animated: false,
-                titleColor: appTheme.isDark ? Colors.white : Colors.black,
+                titleColor: appTheme.titleColor,
               ),
               Text(
                 "\$${currentsaldo.toStringAsFixed(2)}",
@@ -62,7 +62,7 @@ class _SaldoPageState extends State<SaldoPage> {
                       colorHint:
                           appTheme.isDark ? Colors.grey.shade500 : Colors.grey,
                       opacity: appTheme.isDark ? 0.5 : 0.3,
-                      textColor: appTheme.isDark ? Colors.white : Colors.black,
+                      textColor: appTheme.titleColor,
                     ),
                     SizedBox(height: 20),
                     Padding(
@@ -72,7 +72,7 @@ class _SaldoPageState extends State<SaldoPage> {
                     FormCustom(
                       esIngreso: false,
                       color: Colors.red,
-                      textColor: appTheme.isDark ? Colors.white : Colors.black,
+                      textColor: appTheme.titleColor,
                       hintTextMotivo: "Motivo de su gasto",
                       hintTextImporte: "Monto de su gasto",
                       colorHint:
@@ -96,11 +96,11 @@ class _SaldoPageState extends State<SaldoPage> {
         child: appTheme.isDark
             ? Icon(
                 Icons.light_mode_rounded,
-                color: appTheme.isDark ? Colors.white : Colors.black,
+                color: appTheme.titleColor,
               )
             : Icon(
                 Icons.dark_mode_rounded,
-                color: appTheme.isDark ? Colors.white : Colors.black,
+                color: appTheme.titleColor,
               ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
