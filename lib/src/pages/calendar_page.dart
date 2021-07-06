@@ -22,6 +22,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
     final getEventsfromDay =
         Provider.of<EventModel>(context).getEventsfromDay(_selectedDay);
+    final allEvents = Provider.of<EventModel>(context).selectedEvents;
 
     return Scaffold(
       backgroundColor: colors.backgroundColor,
@@ -31,10 +32,9 @@ class _CalendarPageState extends State<CalendarPage> {
           children: [
             SizedBox(height: 40.0),
             TitleCustom(
-              title: 'Recordatorios',
-              icon: FontAwesomeIcons.clock,
-              titleColor: colors.titleColor,
-            ),
+                title: 'Recordatorios',
+                icon: FontAwesomeIcons.clock,
+                titleColor: colors.titleColor),
             SizedBox(height: 25.0),
             calendarBuilder(),
             bottomRecordatorioBuilder(context),
@@ -42,17 +42,57 @@ class _CalendarPageState extends State<CalendarPage> {
 
             //Lista de Recordatorios
             Expanded(
+              child: ListView.builder(
+                itemCount: allEvents.length,
+                itemBuilder: (context, index) => Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            getEventsfromDay.toString(),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: colors.titleColor,
+                                fontWeight: FontWeight.w300),
+                          ),
+                          SizedBox(width: 10),
+                          InkWell(
+                            child: FaIcon(FontAwesomeIcons.trash),
+                            onTap: () {},
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+/* 
+            Expanded(
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: [
                   ...getEventsfromDay.map(
                     (Event event) => Column(
                       children: [
-                        Text(event.title,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: colors.titleColor,
-                                fontWeight: FontWeight.w300)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              event.title,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: colors.titleColor,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            SizedBox(width: 10),
+                            InkWell(
+                              child: FaIcon(FontAwesomeIcons.trash),
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
                         Divider(
                           indent: 60,
                           endIndent: 60,
@@ -63,7 +103,8 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                 ],
               ),
-            ),
+            ), */
+
             SizedBox(height: 20),
           ],
         ),
@@ -71,6 +112,7 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
+//
   TextButton bottomRecordatorioBuilder(BuildContext context) {
     final isDark = Provider.of<ThemeChangerModel>(context).isDark;
     final colors = Provider.of<ThemeChangerModel>(context);

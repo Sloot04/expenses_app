@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class EventModel with ChangeNotifier {
+  //cambiar _selectedEvents por AllEvents
   Map<DateTime, List<Event>> _selectedEvents = {};
   TextEditingController _eventController = TextEditingController();
 
