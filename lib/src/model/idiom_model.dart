@@ -20,6 +20,8 @@ class IdiomModel with ChangeNotifier {
   String _reminders = 'Recordatorios';
   String _addReminders = 'Agregar Recordatorio';
   String _cancel = 'Cancelar';
+  String _resume = 'Resumen';
+  String _record = 'Historial';
 
   bool get isSpanish => this._isSpanish;
   String get myBalance => this._myBalance;
@@ -39,6 +41,8 @@ class IdiomModel with ChangeNotifier {
   String get reminders => this._reminders;
   String get addReminders => this._addReminders;
   String get cancel => this._cancel;
+  String get resume => this._resume;
+  String get record => this._record;
 
   set isSpanish(bool value) {
     this._isSpanish = value;
@@ -65,6 +69,8 @@ class IdiomModel with ChangeNotifier {
       _reminders = 'Recordatorios';
       _addReminders = 'Agregar Recordatorio';
       _cancel = 'Cancelar';
+      _resume = 'Resumen';
+      _record = 'Historial';
     } else {
       _myBalance = 'My balance';
       _income = 'Income';
@@ -83,6 +89,8 @@ class IdiomModel with ChangeNotifier {
       _reminders = 'Reminders';
       _addReminders = 'Add Reminder';
       _cancel = 'Cancel';
+      _resume = 'Resume';
+      _record = 'Record';
     }
   }
 }
