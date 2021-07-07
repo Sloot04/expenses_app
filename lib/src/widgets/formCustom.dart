@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
+import 'package:expenses_app/src/model/idiom_model.dart';
 
 class FormCustom extends StatefulWidget {
   final Color color;
@@ -35,6 +36,7 @@ class _FormCustomState extends State<FormCustom> {
   @override
   Widget build(BuildContext context) {
     final movimientos = Provider.of<MovimientosModel>(context);
+    final idiomModel = Provider.of<IdiomModel>(context);
 
     return Container(
       // margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -43,10 +45,10 @@ class _FormCustomState extends State<FormCustom> {
         child: Column(
           children: [
             _textFormFieldCustom(
-                _motivoController, "Motivo", TextInputType.text, true),
+                _motivoController, idiomModel.reason, TextInputType.text, true),
             SizedBox(height: 15),
             _textFormFieldCustom(
-                _importeController, "Importe", TextInputType.number, false),
+                _importeController, idiomModel.total, TextInputType.number, false),
             SizedBox(height: 30),
             TextButton(
               onPressed: () {
@@ -66,7 +68,7 @@ class _FormCustomState extends State<FormCustom> {
                 }
               },
               child: Text(
-                "Agregar",
+                idiomModel.add,
                 style: TextStyle(color: Colors.grey.shade900, fontSize: 18),
               ),
               style: ButtonStyle(
@@ -102,7 +104,7 @@ class _FormCustomState extends State<FormCustom> {
               borderSide: BorderSide(color: this.widget.color)),
           labelText: labelText,
           labelStyle: TextStyle(color: widget.color),
-          hintText: widget.hintTextMotivo,
+          hintText: widget.hintTextImporte,
           hintStyle: TextStyle(color: widget.colorHint)),
     );
   }
