@@ -17,6 +17,9 @@ class IdiomModel with ChangeNotifier {
   String _noLastMovements = 'No se registraron últimos movimientos';
   String _amount = 'Monto';
   String _date = 'Fecha';
+  String _reminders = 'Recordatorios';
+  String _addReminders = 'Agregar Recordatorio';
+  String _cancel = 'Cancelar';
 
   bool get isSpanish => this._isSpanish;
   String get myBalance => this._myBalance;
@@ -33,6 +36,9 @@ class IdiomModel with ChangeNotifier {
   String get noLastMovements => this._noLastMovements;
   String get amount => this._amount;
   String get date => this._date;
+  String get reminders => this._reminders;
+  String get addReminders => this._addReminders;
+  String get cancel => this._cancel;
 
   set isSpanish(bool value) {
     this._isSpanish = value;
@@ -56,6 +62,9 @@ class IdiomModel with ChangeNotifier {
       _noLastMovements = 'No se registraron últimos movimientos';
       _amount = 'Monto';
       _date = 'Fecha';
+      _reminders = 'Recordatorios';
+      _addReminders = 'Agregar Recordatorio';
+      _cancel = 'Cancelar';
     } else {
       _myBalance = 'My balance';
       _income = 'Income';
@@ -71,6 +80,9 @@ class IdiomModel with ChangeNotifier {
       _noLastMovements = 'No last movements were registered';
       _amount = 'Amount';
       _date = 'Date';
+      _reminders = 'Reminders';
+      _addReminders = 'Add Reminder';
+      _cancel = 'Cancel';
     }
   }
 }
