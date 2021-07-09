@@ -14,7 +14,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  DateTime _focusedDay  = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
 
   @override
@@ -28,20 +28,20 @@ class _CalendarPageState extends State<CalendarPage> {
     return Scaffold(
       backgroundColor: colors.backgroundColor,
       body: Container(
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.only(left: 20, right: 20, top: 15),
         child: Column(
           children: [
-            SizedBox(height: 40.0),
+            SizedBox(height: 30.0),
             TitleCustom(
               title: idiomModel.reminders,
               icon: FontAwesomeIcons.clock,
               titleColor: colors.titleColor,
             ),
-            SizedBox(height: 25.0),
+        
             calendarBuilder(),
             bottomRecordatorioBuilder(context),
             SizedBox(height: 20),
-
+        
             //Lista de Recordatorios
             Expanded(
               child: ListView(
@@ -97,6 +97,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 actionsOverflowButtonSpacing: 10,
                 actions: [
                   TextFormField(
+                    autofocus: true,
                     cursorColor: colors.titleColor,
                     style: TextStyle(color: colors.titleColor),
                     decoration: InputDecoration(
@@ -179,7 +180,7 @@ class _CalendarPageState extends State<CalendarPage> {
           ),
           titleCentered: true,
           titleTextStyle: TextStyle(color: colors.titleColor),
-          headerPadding: EdgeInsets.symmetric(vertical: 35),
+          headerPadding: EdgeInsets.only(top: 25, bottom: 15),
           formatButtonVisible: false,
         ),
         calendarStyle: CalendarStyle(

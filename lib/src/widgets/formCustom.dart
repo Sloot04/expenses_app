@@ -46,10 +46,10 @@ class _FormCustomState extends State<FormCustom> {
           children: [
             _textFormFieldCustom(
                 _motivoController, idiomModel.reason, TextInputType.text, true),
-            SizedBox(height: 15),
+            SizedBox(height: 8),
             _textFormFieldCustom(
                 _importeController, idiomModel.total, TextInputType.number, false),
-            SizedBox(height: 30),
+            SizedBox(height: 15),
             TextButton(
               onPressed: () {
                 double monto = double.parse(_importeController.text);
