@@ -5,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/model/event_model.dart';
+import 'package:expenses_app/src/model/idiom_model.dart';
 import 'package:expenses_app/src/widgets/title_custom.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  DateTime _focusedDay = DateTime.now();
+  DateTime _focusedDay  = DateTime.now();
   DateTime _selectedDay = DateTime.now();
 
   @override
@@ -22,6 +23,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
     final getEventsfromDay =
         Provider.of<EventModel>(context).getEventsfromDay(_selectedDay);
+    final idiomModel = Provider.of<IdiomModel>(context);
 
     return Scaffold(
       backgroundColor: colors.backgroundColor,
@@ -31,7 +33,7 @@ class _CalendarPageState extends State<CalendarPage> {
           children: [
             SizedBox(height: 40.0),
             TitleCustom(
-              title: 'Recordatorios',
+              title: idiomModel.reminders,
               icon: FontAwesomeIcons.clock,
               titleColor: colors.titleColor,
             ),
@@ -76,6 +78,7 @@ class _CalendarPageState extends State<CalendarPage> {
     final colors = Provider.of<ThemeChangerModel>(context);
     final eventController = Provider.of<EventModel>(context).eventController;
     final selectedEvents = Provider.of<EventModel>(context).selectedEvents;
+    final idiomModel = Provider.of<IdiomModel>(context);
 
     return TextButton(
         onPressed: () => showDialog(
@@ -85,7 +88,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 actionsPadding: EdgeInsets.symmetric(horizontal: 15),
                 insetPadding: EdgeInsets.symmetric(horizontal: 65),
                 title: Text(
-                  "Agregar Recordatorio",
+                  idiomModel.addReminders,
                   style: TextStyle(
                       color: colors.titleColor, fontWeight: FontWeight.w300),
                 ),
@@ -107,7 +110,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     children: [
                       TextButton(
                           onPressed: () => Navigator.pop(context),
-                          child: Text("Cancel",
+                          child: Text(idiomModel.cancel,
                               style: TextStyle(color: colors.titleColor))),
                       SizedBox(
                         width: 5,
@@ -138,7 +141,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 ],
               ),
             ),
-        child: Text("Agregar Recordatorio",
+        child: Text(idiomModel.addReminders,
             style: TextStyle(
                 color: colors.titleColor, fontWeight: FontWeight.w300)));
   }

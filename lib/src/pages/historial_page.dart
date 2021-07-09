@@ -1,11 +1,12 @@
-import 'package:expenses_app/src/widgets/title_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
+import 'package:expenses_app/src/model/idiom_model.dart';
 import 'package:expenses_app/src/model/theme_changer_model.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:expenses_app/src/widgets/title_custom.dart';
 
 class HistorialPage extends StatelessWidget {
   @override
@@ -13,6 +14,7 @@ class HistorialPage extends StatelessWidget {
     final listaMovimiento =
         Provider.of<MovimientosModel>(context).listaMovimientos.reversed;
     final colors = Provider.of<ThemeChangerModel>(context);
+    final idiomModel = Provider.of<IdiomModel>(context);
     final colorText = TextStyle(color: Colors.white);
     return Scaffold(
       backgroundColor: colors.backgroundColor,
@@ -24,14 +26,14 @@ class HistorialPage extends StatelessWidget {
               SizedBox(height: 40.0),
               TitleCustom(
                 icon: FontAwesomeIcons.book,
-                title: 'Últimos movimientos',
+                title: idiomModel.lastMovements,
                 underline: 320.0,
                 titleColor: colors.titleColor,
               ),
               SizedBox(height: 25.0),
               if (listaMovimiento.length == 0)
                 Text(
-                  "No se registraron últimos movimientos",
+                  idiomModel.noLastMovements,
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
               if (listaMovimiento.length > 0)
@@ -44,6 +46,7 @@ class HistorialPage extends StatelessWidget {
   }
 
   Container dataTableCustom(TextStyle colorText, listaMovimiento, context) {
+    final idiomModel = Provider.of<IdiomModel>(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       height: 250,
@@ -59,9 +62,9 @@ class HistorialPage extends StatelessWidget {
             headingRowColor: MaterialStateProperty.all(Colors.black),
             headingRowHeight: 40,
             columns: [
-              DataColumn(label: Text('Motivo', style: colorText)),
-              DataColumn(label: Text('Monto', style: colorText)),
-              DataColumn(label: Text('Fecha', style: colorText)),
+              DataColumn(label: Text(idiomModel.reason, style: colorText)),
+              DataColumn(label: Text(idiomModel.amount, style: colorText)),
+              DataColumn(label: Text(idiomModel.date, style: colorText)),
             ],
             rows: dataRow(listaMovimiento, context),
           ),
