@@ -17,9 +17,9 @@ class _SaldoPageState extends State<SaldoPage> {
   @override
   Widget build(BuildContext context) {
     final currentsaldo = Provider.of<MovimientosModel>(context).saldo;
-    final appTheme = Provider.of<ThemeChangerModel>(context);
-    final idiomModel = Provider.of<IdiomModel>(context);
-    final textStyle = TextStyle(
+    final appTheme     = Provider.of<ThemeChangerModel>(context);
+    final idiomModel   = Provider.of<IdiomModel>(context);
+    final textStyle    = TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.w300,
       color: appTheme.isDark ? Colors.white : Colors.black,
@@ -99,7 +99,9 @@ class _SaldoPageState extends State<SaldoPage> {
                   ? idiomModel.isSpanish = false
                   : idiomModel.isSpanish = true;
             },
-            child: idiomModel.isSpanish ? Text('ENG', style: TextStyle(color: appTheme.titleColor),) : Text('ESP', style: TextStyle(color: appTheme.titleColor),),
+            child: idiomModel.isSpanish
+                ? Text('ENG', style: TextStyle(color: appTheme.titleColor))
+                : Text('ESP', style: TextStyle(color: appTheme.titleColor)),
           ),
           FloatingActionButton(
             backgroundColor: Colors.transparent,

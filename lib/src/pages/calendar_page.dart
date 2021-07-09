@@ -14,7 +14,7 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  DateTime _focusedDay = DateTime.now();
+  DateTime _focusedDay  = DateTime.now();
   DateTime _selectedDay = DateTime.now();
 
   @override
