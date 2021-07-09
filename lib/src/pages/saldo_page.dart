@@ -17,9 +17,9 @@ class _SaldoPageState extends State<SaldoPage> {
   @override
   Widget build(BuildContext context) {
     final currentsaldo = Provider.of<MovimientosModel>(context).saldo;
-    final appTheme     = Provider.of<ThemeChangerModel>(context);
-    final idiomModel   = Provider.of<IdiomModel>(context);
-    final textStyle    = TextStyle(
+    final appTheme = Provider.of<ThemeChangerModel>(context);
+    final idiomModel = Provider.of<IdiomModel>(context);
+    final textStyle = TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.w300,
       color: appTheme.isDark ? Colors.white : Colors.black,
@@ -29,10 +29,10 @@ class _SaldoPageState extends State<SaldoPage> {
       backgroundColor: appTheme.backgroundColor,
       body: Center(
         child: Container(
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 15),
           child: Column(
             children: [
-              SizedBox(height: 40.0),
+              SizedBox(height: 30.0),
               TitleCustom(
                 title: idiomModel.myBalance,
                 icon: FontAwesomeIcons.piggyBank,
@@ -47,7 +47,6 @@ class _SaldoPageState extends State<SaldoPage> {
                     fontSize: 25,
                     fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 40.0),
               Expanded(
                 child: ListView(
                   children: [
@@ -65,7 +64,7 @@ class _SaldoPageState extends State<SaldoPage> {
                       opacity: appTheme.isDark ? 0.5 : 0.3,
                       textColor: appTheme.titleColor,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Text(idiomModel.expenses, style: textStyle),
