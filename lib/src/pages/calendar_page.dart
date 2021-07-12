@@ -37,11 +37,11 @@ class _CalendarPageState extends State<CalendarPage> {
               icon: FontAwesomeIcons.clock,
               titleColor: colors.titleColor,
             ),
-        
+
             calendarBuilder(),
             bottomRecordatorioBuilder(context),
             SizedBox(height: 20),
-        
+
             //Lista de Recordatorios
             Expanded(
               child: ListView(
@@ -150,12 +150,14 @@ class _CalendarPageState extends State<CalendarPage> {
   TableCalendar<Event> calendarBuilder() {
     final colors = Provider.of<ThemeChangerModel>(context);
     final eventModel = Provider.of<EventModel>(context);
+    final idiomModel = Provider.of<IdiomModel>(context);
 
     return TableCalendar(
         firstDay: DateTime.utc(2020, 1, 1),
         weekendDays: [DateTime.sunday],
+        locale: idiomModel.isSpanish ? "es_ES" : "en_US",
         focusedDay: _focusedDay,
-        lastDay: DateTime.now().add(Duration(days: 365)),
+        lastDay: DateTime.now().add(Duration(days: 730)),
         startingDayOfWeek: StartingDayOfWeek.sunday,
         onDaySelected: (selectedDay, focusedDay) {
           setState(() {

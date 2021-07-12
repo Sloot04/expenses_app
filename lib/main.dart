@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
 import 'package:expenses_app/src/model/bottomNavigation_model.dart';
@@ -9,16 +9,18 @@ import 'package:expenses_app/src/widgets/bottomNavigationBar_custom.dart';
 import 'package:expenses_app/src/model/idiom_model.dart';
 import 'package:expenses_app/src/model/event_model.dart';
 
-void main() => runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => MovimientosModel()),
-          ChangeNotifierProvider(create: (_) => BottomNavigationModel()),
-          ChangeNotifierProvider(create: (_) => ThemeChangerModel()),
-          ChangeNotifierProvider(create: (_) => EventModel()),
-           ChangeNotifierProvider(create: (_) => IdiomModel()),
-        ],
-        child: MyApp(),
+void main() => initializeDateFormatting().then(
+      (_) => runApp(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => MovimientosModel()),
+            ChangeNotifierProvider(create: (_) => BottomNavigationModel()),
+            ChangeNotifierProvider(create: (_) => ThemeChangerModel()),
+            ChangeNotifierProvider(create: (_) => EventModel()),
+            ChangeNotifierProvider(create: (_) => IdiomModel()),
+          ],
+          child: MyApp(),
+        ),
       ),
     );
 
