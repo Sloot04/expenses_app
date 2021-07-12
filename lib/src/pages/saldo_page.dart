@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:expenses_app/src/model/movimiento_model.dart';
 import 'package:expenses_app/src/model/idiom_model.dart';
 import 'package:expenses_app/src/model/theme_changer_model.dart';
-import 'package:expenses_app/src/widgets/formCustom.dart';
+import 'package:expenses_app/src/widgets/form_custom.dart';
 import 'package:expenses_app/src/widgets/title_custom.dart';
 
 class SaldoPage extends StatefulWidget {
@@ -20,10 +20,9 @@ class _SaldoPageState extends State<SaldoPage> {
     final appTheme = Provider.of<ThemeChangerModel>(context);
     final idiomModel = Provider.of<IdiomModel>(context);
     final textStyle = TextStyle(
-      fontSize: 20,
-      fontWeight: FontWeight.w300,
-      color: appTheme.isDark ? Colors.white : Colors.black,
-    );
+        fontSize: 20,
+        fontWeight: FontWeight.w300,
+        color: appTheme.isDark ? Colors.white : Colors.black);
 
     return Scaffold(
       backgroundColor: appTheme.backgroundColor,
