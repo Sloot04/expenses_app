@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
-import 'package:expenses_app/src/model/idiom_model.dart';
+import 'package:expenses_app/src/model/languaje_model.dart';
 import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/widgets/title_custom.dart';
 
@@ -14,26 +14,26 @@ class HistorialPage extends StatelessWidget {
     final listaMovimiento =
         Provider.of<MovimientosModel>(context).listaMovimientos.reversed;
     final colors = Provider.of<ThemeChangerModel>(context);
-    final idiomModel = Provider.of<IdiomModel>(context);
+    final languajeModel = Provider.of<LanguajeModel>(context);
     final colorText = TextStyle(color: Colors.white);
     return Scaffold(
       backgroundColor: colors.backgroundColor,
       body: Center(
         child: Container(
-         margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 15),
           child: Column(
             children: [
               SizedBox(height: 30.0),
               TitleCustom(
                 icon: FontAwesomeIcons.book,
-                title: idiomModel.lastMovements,
+                title: languajeModel.lastMovements,
                 underline: 320.0,
                 titleColor: colors.titleColor,
               ),
               SizedBox(height: 25.0),
               if (listaMovimiento.length == 0)
                 Text(
-                  idiomModel.noLastMovements,
+                  languajeModel.noLastMovements,
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
               if (listaMovimiento.length > 0)
@@ -46,7 +46,7 @@ class HistorialPage extends StatelessWidget {
   }
 
   Container dataTableCustom(TextStyle colorText, listaMovimiento, context) {
-    final idiomModel = Provider.of<IdiomModel>(context);
+    final languajeModel = Provider.of<LanguajeModel>(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0),
       height: 250,
@@ -62,9 +62,9 @@ class HistorialPage extends StatelessWidget {
             headingRowColor: MaterialStateProperty.all(Colors.black),
             headingRowHeight: 40,
             columns: [
-              DataColumn(label: Text(idiomModel.reason, style: colorText)),
-              DataColumn(label: Text(idiomModel.amount, style: colorText)),
-              DataColumn(label: Text(idiomModel.date, style: colorText)),
+              DataColumn(label: Text(languajeModel.reason, style: colorText)),
+              DataColumn(label: Text(languajeModel.amount, style: colorText)),
+              DataColumn(label: Text(languajeModel.date, style: colorText)),
             ],
             rows: dataRow(listaMovimiento, context),
           ),
@@ -81,8 +81,10 @@ class HistorialPage extends StatelessWidget {
     final List<DataRow> lista = listaMovimiento.map<DataRow>((movimiento) {
       return DataRow(
           color: (movimiento.monto.toString()[0] == '-')
-              ? MaterialStateProperty.all(Colors.red.withOpacity(colors.opacity))
-              : MaterialStateProperty.all(Colors.green.withOpacity(colors.opacity)),
+              ? MaterialStateProperty.all(
+                  Colors.red.withOpacity(colors.opacity))
+              : MaterialStateProperty.all(
+                  Colors.green.withOpacity(colors.opacity)),
           cells: <DataCell>[
             DataCell(Text(
               movimiento.motivo,

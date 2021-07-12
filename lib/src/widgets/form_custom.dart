@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
-import 'package:expenses_app/src/model/idiom_model.dart';
+import 'package:expenses_app/src/model/languaje_model.dart';
 
 class FormCustom extends StatefulWidget {
   final Color color;
@@ -36,7 +36,7 @@ class _FormCustomState extends State<FormCustom> {
   @override
   Widget build(BuildContext context) {
     final movimientos = Provider.of<MovimientosModel>(context);
-    final idiomModel = Provider.of<IdiomModel>(context);
+    final languajeModel = Provider.of<LanguajeModel>(context);
 
     return Container(
       // margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
@@ -44,11 +44,11 @@ class _FormCustomState extends State<FormCustom> {
         key: _formKey,
         child: Column(
           children: [
-            _textFormFieldCustom(
-                _motivoController, idiomModel.reason, TextInputType.text, true),
+            _textFormFieldCustom(_motivoController, languajeModel.reason,
+                TextInputType.text, true),
             SizedBox(height: 8),
-            _textFormFieldCustom(
-                _importeController, idiomModel.total, TextInputType.number, false),
+            _textFormFieldCustom(_importeController, languajeModel.total,
+                TextInputType.number, false),
             SizedBox(height: 15),
             TextButton(
               onPressed: () {
@@ -68,7 +68,7 @@ class _FormCustomState extends State<FormCustom> {
                 }
               },
               child: Text(
-                idiomModel.add,
+                languajeModel.add,
                 style: TextStyle(color: Colors.grey.shade900, fontSize: 18),
               ),
               style: ButtonStyle(

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:expenses_app/src/model/movimiento_model.dart';
-import 'package:expenses_app/src/model/idiom_model.dart';
+import 'package:expenses_app/src/model/languaje_model.dart';
 import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/widgets/form_custom.dart';
 import 'package:expenses_app/src/widgets/title_custom.dart';
@@ -18,7 +18,7 @@ class _SaldoPageState extends State<SaldoPage> {
   Widget build(BuildContext context) {
     final currentsaldo = Provider.of<MovimientosModel>(context).saldo;
     final appTheme = Provider.of<ThemeChangerModel>(context);
-    final idiomModel = Provider.of<IdiomModel>(context);
+    final languajeModel = Provider.of<LanguajeModel>(context);
     final textStyle = TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w300,
@@ -33,7 +33,7 @@ class _SaldoPageState extends State<SaldoPage> {
             children: [
               SizedBox(height: 30.0),
               TitleCustom(
-                title: idiomModel.myBalance,
+                title: languajeModel.myBalance,
                 icon: FontAwesomeIcons.piggyBank,
                 underline: 180.0,
                 animated: false,
@@ -51,13 +51,13 @@ class _SaldoPageState extends State<SaldoPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Text(idiomModel.income, style: textStyle),
+                      child: Text(languajeModel.income, style: textStyle),
                     ),
                     FormCustom(
                       color: Colors.green,
                       esIngreso: true,
-                      hintTextMotivo: idiomModel.reasonIncome,
-                      hintTextImporte: idiomModel.amountIncome,
+                      hintTextMotivo: languajeModel.reasonIncome,
+                      hintTextImporte: languajeModel.amountIncome,
                       colorHint:
                           appTheme.isDark ? Colors.grey.shade500 : Colors.grey,
                       opacity: appTheme.isDark ? 0.5 : 0.3,
@@ -66,14 +66,14 @@ class _SaldoPageState extends State<SaldoPage> {
                     SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Text(idiomModel.expenses, style: textStyle),
+                      child: Text(languajeModel.expenses, style: textStyle),
                     ),
                     FormCustom(
                       esIngreso: false,
                       color: Colors.red,
                       textColor: appTheme.titleColor,
-                      hintTextMotivo: idiomModel.reasonExpenses,
-                      hintTextImporte: idiomModel.amountExpenses,
+                      hintTextMotivo: languajeModel.reasonExpenses,
+                      hintTextImporte: languajeModel.amountExpenses,
                       colorHint:
                           appTheme.isDark ? Colors.grey.shade500 : Colors.grey,
                       opacity: appTheme.isDark ? 0.5 : 0.3,
@@ -93,11 +93,11 @@ class _SaldoPageState extends State<SaldoPage> {
             elevation: 0.0,
             hoverElevation: 0.0,
             onPressed: () {
-              idiomModel.isSpanish
-                  ? idiomModel.isSpanish = false
-                  : idiomModel.isSpanish = true;
+              languajeModel.isSpanish
+                  ? languajeModel.isSpanish = false
+                  : languajeModel.isSpanish = true;
             },
-            child: idiomModel.isSpanish
+            child: languajeModel.isSpanish
                 ? Text('ENG', style: TextStyle(color: appTheme.titleColor))
                 : Text('ESP', style: TextStyle(color: appTheme.titleColor)),
           ),

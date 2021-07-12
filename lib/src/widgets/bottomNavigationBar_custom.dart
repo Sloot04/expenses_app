@@ -3,13 +3,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'package:expenses_app/src/model/bottomNavigation_model.dart';
-import 'package:expenses_app/src/model/idiom_model.dart';
+import 'package:expenses_app/src/model/languaje_model.dart';
 
 class BottomNavigationBarCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bottomProvider = Provider.of<BottomNavigationModel>(context);
-    final idiomModel = Provider.of<IdiomModel>(context);
+    final languajeModel = Provider.of<LanguajeModel>(context);
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
@@ -24,15 +24,15 @@ class BottomNavigationBarCustom extends StatelessWidget {
       },
       items: [
         BottomNavigationBarItem(
-          label: idiomModel.resume,
+          label: languajeModel.resume,
           icon: FaIcon(FontAwesomeIcons.piggyBank),
         ),
         BottomNavigationBarItem(
-          label: idiomModel.record,
+          label: languajeModel.record,
           icon: FaIcon(FontAwesomeIcons.book),
         ),
         BottomNavigationBarItem(
-          label: idiomModel.reminders,
+          label: languajeModel.reminders,
           icon: FaIcon(FontAwesomeIcons.clock),
         ),
       ],

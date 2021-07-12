@@ -5,7 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 
 import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/model/event_model.dart';
-import 'package:expenses_app/src/model/idiom_model.dart';
+import 'package:expenses_app/src/model/languaje_model.dart';
 import 'package:expenses_app/src/widgets/title_custom.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
     final getEventsfromDay =
         Provider.of<EventModel>(context).getEventsfromDay(_selectedDay);
-    final idiomModel = Provider.of<IdiomModel>(context);
+    final languajeModel = Provider.of<LanguajeModel>(context);
 
     return Scaffold(
       backgroundColor: colors.backgroundColor,
@@ -33,7 +33,7 @@ class _CalendarPageState extends State<CalendarPage> {
           children: [
             SizedBox(height: 30.0),
             TitleCustom(
-              title: idiomModel.reminders,
+              title: languajeModel.reminders,
               icon: FontAwesomeIcons.clock,
               titleColor: colors.titleColor,
             ),
@@ -78,7 +78,7 @@ class _CalendarPageState extends State<CalendarPage> {
     final colors = Provider.of<ThemeChangerModel>(context);
     final eventController = Provider.of<EventModel>(context).eventController;
     final selectedEvents = Provider.of<EventModel>(context).selectedEvents;
-    final idiomModel = Provider.of<IdiomModel>(context);
+    final languajeModel = Provider.of<LanguajeModel>(context);
 
     return TextButton(
         onPressed: () => showDialog(
@@ -88,7 +88,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 actionsPadding: EdgeInsets.symmetric(horizontal: 15),
                 insetPadding: EdgeInsets.symmetric(horizontal: 65),
                 title: Text(
-                  idiomModel.addReminders,
+                  languajeModel.addReminders,
                   style: TextStyle(
                       color: colors.titleColor, fontWeight: FontWeight.w300),
                 ),
@@ -111,7 +111,7 @@ class _CalendarPageState extends State<CalendarPage> {
                     children: [
                       TextButton(
                           onPressed: () => Navigator.pop(context),
-                          child: Text(idiomModel.cancel,
+                          child: Text(languajeModel.cancel,
                               style: TextStyle(color: colors.titleColor))),
                       SizedBox(
                         width: 5,
@@ -142,7 +142,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 ],
               ),
             ),
-        child: Text(idiomModel.addReminders,
+        child: Text(languajeModel.addReminders,
             style: TextStyle(
                 color: colors.titleColor, fontWeight: FontWeight.w300)));
   }
@@ -150,12 +150,12 @@ class _CalendarPageState extends State<CalendarPage> {
   TableCalendar<Event> calendarBuilder() {
     final colors = Provider.of<ThemeChangerModel>(context);
     final eventModel = Provider.of<EventModel>(context);
-    final idiomModel = Provider.of<IdiomModel>(context);
+    final languajeModel = Provider.of<LanguajeModel>(context);
 
     return TableCalendar(
         firstDay: DateTime.utc(2020, 1, 1),
         weekendDays: [DateTime.sunday],
-        locale: idiomModel.isSpanish ? "es_ES" : "en_US",
+        locale: languajeModel.isSpanish ? "es_ES" : "en_US",
         focusedDay: _focusedDay,
         lastDay: DateTime.now().add(Duration(days: 730)),
         startingDayOfWeek: StartingDayOfWeek.sunday,
