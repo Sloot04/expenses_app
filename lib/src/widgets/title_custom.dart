@@ -24,8 +24,17 @@ class TitleCustom extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             animated
-                ? BounceInLeft(from: 130, child: FaIcon(this.icon, color: this.titleColor,))
-                : BounceInDown(child: FaIcon(this.icon, color: this.titleColor,)),
+                ? BounceInLeft(
+                    from: 130,
+                    child: FaIcon(
+                      this.icon,
+                      color: this.titleColor,
+                    ))
+                : BounceInDown(
+                    child: FaIcon(
+                    this.icon,
+                    color: this.titleColor,
+                  )),
             SizedBox(width: 8.0),
             Text(
               this.title,
