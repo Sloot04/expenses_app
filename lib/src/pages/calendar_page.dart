@@ -1,3 +1,5 @@
+import 'package:expenses_app/src/db/db.dart';
+import 'package:expenses_app/src/db/recordatorios_db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -117,13 +119,17 @@ class _CalendarPageState extends State<CalendarPage> {
                         width: 5,
                       ),
                       TextButton(
-                          onPressed: () {
+                          onPressed: () async {
+                             await DB.insert(Recordatorio(
+                                    recordatorio: eventController.text,
+                                    fecha: _selectedDay.toString()));
                             if (eventController.text.isEmpty) {
                             } else {
                               if (selectedEvents[_selectedDay] != null) {
                                 selectedEvents[_selectedDay]!.add(
                                   Event(title: eventController.text),
                                 );
+                               
                               } else {
                                 selectedEvents[_selectedDay] = [
                                   Event(title: eventController.text)
