@@ -48,10 +48,12 @@ class DB {
     );
   }
 
-    static Future<dynamic> getByDate (Recordatorio recordatorio) async {
+  static Future<dynamic> getByDate(Recordatorio recordatorio) async {
     Database database = await _openDB();
-    final List<Map<String, dynamic>> recordatoriosMap =
-        await database.query("recordatorios", where: 'fecha = ?', whereArgs: [recordatorio.fecha]);
+    final List<Map<String, dynamic>> recordatoriosMap = await database.query(
+        "recordatorios",
+        where: 'fecha = ?',
+        whereArgs: [recordatorio.fecha]);
 
     return List.generate(
       recordatoriosMap.length,
