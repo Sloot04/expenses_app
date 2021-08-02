@@ -47,4 +47,18 @@ class DB {
           fecha: recordatoriosMap[index]["fecha"]),
     );
   }
+
+    static Future<dynamic> getByDate (Recordatorio recordatorio) async {
+    Database database = await _openDB();
+    final List<Map<String, dynamic>> recordatoriosMap =
+        await database.query("recordatorios", where: 'fecha = ?', whereArgs: [recordatorio.fecha]);
+
+    return List.generate(
+      recordatoriosMap.length,
+      (index) => Recordatorio(
+          id: recordatoriosMap[index]["id"],
+          recordatorio: recordatoriosMap[index]["recordatorio"],
+          fecha: recordatoriosMap[index]["fecha"]),
+    );
+  }
 }
