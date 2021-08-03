@@ -1,5 +1,4 @@
-import 'package:expenses_app/src/db/db.dart';
-import 'package:expenses_app/src/db/recordatorios_db.dart';
+//import 'package:expenses_app/src/db/db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +8,7 @@ import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/model/event_model.dart';
 import 'package:expenses_app/src/model/languaje_model.dart';
 import 'package:expenses_app/src/widgets/title_custom.dart';
+//import 'package:expenses_app/src/db/recordatorios_db.dart';
 
 class CalendarPage extends StatefulWidget {
   @override
@@ -20,13 +20,15 @@ class _CalendarPageState extends State<CalendarPage> {
   DateTime _selectedDay = DateTime.now();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
     final colors = Provider.of<ThemeChangerModel>(context);
 
     final getEventsfromDay =
         Provider.of<EventModel>(context).getEventsfromDay(_selectedDay);
     final languajeModel = Provider.of<LanguajeModel>(context);
 
+    final getEventsByDate = 
+        Provider.of<EventModel>(context).getEventsByDate(_selectedDay);
     return Scaffold(
       backgroundColor: colors.backgroundColor,
       body: Container(
@@ -79,7 +81,7 @@ class _CalendarPageState extends State<CalendarPage> {
     final isDark = Provider.of<ThemeChangerModel>(context).isDark;
     final colors = Provider.of<ThemeChangerModel>(context);
     final eventController = Provider.of<EventModel>(context).eventController;
-    final selectedEvents = Provider.of<EventModel>(context).selectedEvents;
+    final eventModel = Provider.of<EventModel>(context);
     final languajeModel = Provider.of<LanguajeModel>(context);
 
     return TextButton(
@@ -119,21 +121,28 @@ class _CalendarPageState extends State<CalendarPage> {
                         width: 5,
                       ),
                       TextButton(
-                          onPressed: () async {
-                             await DB.insert(Recordatorio(
-                                    recordatorio: eventController.text,
-                                    fecha: _selectedDay.toString()));
+                          onPressed: () {
                             if (eventController.text.isEmpty) {
                             } else {
-                              if (selectedEvents[_selectedDay] != null) {
-                                selectedEvents[_selectedDay]!.add(
-                                  Event(title: eventController.text),
+                              if (eventModel.selectedEvents[_selectedDay] !=
+                                  null) {
+                                eventModel.selectedEvents[_selectedDay]!.add(
+                                  Event(
+                                      date: _selectedDay,
+                                      title: eventController.text),
                                 );
-                               
+                                eventModel.addEvent(Event(
+                                    date: _selectedDay,
+                                    title: eventController.text));
                               } else {
-                                selectedEvents[_selectedDay] = [
-                                  Event(title: eventController.text)
+                                eventModel.selectedEvents[_selectedDay] = [
+                                  Event(
+                                      date: _selectedDay,
+                                      title: eventController.text)
                                 ];
+                                eventModel.addEvent(Event(
+                                    date: _selectedDay,
+                                    title: eventController.text));
                               }
                               Navigator.pop(context);
                               eventController.clear();

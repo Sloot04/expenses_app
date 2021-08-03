@@ -9,7 +9,7 @@ class DB {
       join(await getDatabasesPath(), "recordatorios.db"),
       onCreate: (db, version) {
         return db.execute(
-            "CREATE TABLE recordatorios (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, recordatorio TEXT, fecha TEXT)");
+            "CREATE TABLE recordatorios (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, recordatorio TEXT, fecha INTEGER)");
       },
       version: 1,
     );
@@ -34,26 +34,32 @@ class DB {
         where: 'id=?', whereArgs: [recordatorio.id]);
   }
 
-  static Future<dynamic> getAll() async {
+  static Future<List<Recordatorio>> getAll() async {
     Database database = await _openDB();
-    final List<Map<String, dynamic>> recordatoriosMap =
-        await database.query("recordatorios");
+    final List<Map<String, dynamic>> recordatorioList = await database.query(
+      "recordatorios",
+      orderBy: 'fecha',
+    );
 
     return List.generate(
-      recordatoriosMap.length,
+      recordatorioList.length,
       (index) => Recordatorio(
-          id: recordatoriosMap[index]["id"],
-          recordatorio: recordatoriosMap[index]["recordatorio"],
-          fecha: recordatoriosMap[index]["fecha"]),
+          id: recordatorioList[index]["id"],
+          recordatorio: recordatorioList[index]["recordatorio"],
+          fecha: recordatorioList[index]["fecha"]),
     );
   }
 
-  static Future<dynamic> getByDate(Recordatorio recordatorio) async {
+   static Future<List<Recordatorio>> getByDate(
+      DateTime day) async {
+   
     Database database = await _openDB();
     final List<Map<String, dynamic>> recordatoriosMap = await database.query(
-        "recordatorios",
-        where: 'fecha = ?',
-        whereArgs: [recordatorio.fecha]);
+      "recordatorios",
+      where: 'fecha = ? ',
+      whereArgs: [day],
+      orderBy: 'fecha',
+    );
 
     return List.generate(
       recordatoriosMap.length,
@@ -63,4 +69,25 @@ class DB {
           fecha: recordatoriosMap[index]["fecha"]),
     );
   }
+
+  /* static Future<List<Recordatorio>> getByDate(
+      DateTime start, DateTime end) async {
+    int startSec = (start.millisecondsSinceEpoch / 1000).floor();
+    int endSec = (end.millisecondsSinceEpoch / 1000).floor();
+    Database database = await _openDB();
+    final List<Map<String, dynamic>> recordatoriosMap = await database.query(
+      "recordatorios",
+      where: 'fecha >= ? and fecha < ?',
+      whereArgs: [startSec, endSec],
+      orderBy: 'fecha',
+    );
+
+    return List.generate(
+      recordatoriosMap.length,
+      (index) => Recordatorio(
+          id: recordatoriosMap[index]["id"],
+          recordatorio: recordatoriosMap[index]["recordatorio"],
+          fecha: recordatoriosMap[index]["fecha"]),
+    );
+  } */
 }
