@@ -1,9 +1,10 @@
 //import 'package:expenses_app/src/db/db.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:dartz/dartz.dart' show Tuple2;
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 
+import 'package:table_calendar/table_calendar.dart';
 import 'package:expenses_app/src/model/theme_changer_model.dart';
 import 'package:expenses_app/src/model/event_model.dart';
 import 'package:expenses_app/src/model/languaje_model.dart';
@@ -20,15 +21,13 @@ class _CalendarPageState extends State<CalendarPage> {
   DateTime _selectedDay = DateTime.now();
 
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     final colors = Provider.of<ThemeChangerModel>(context);
 
-    final getEventsfromDay =
-        Provider.of<EventModel>(context).getEventsfromDay(_selectedDay);
+    final eventsFromSelectedDay =
+        Provider.of<EventModel>(context).getEventsByDay(_selectedDay);
     final languajeModel = Provider.of<LanguajeModel>(context);
 
-    final getEventsByDate = 
-        Provider.of<EventModel>(context).getEventsByDate(_selectedDay);
     return Scaffold(
       backgroundColor: colors.backgroundColor,
       body: Container(
@@ -42,32 +41,45 @@ class _CalendarPageState extends State<CalendarPage> {
               titleColor: colors.titleColor,
             ),
 
-            calendarBuilder(),
+            calendarBuilder(context),
             bottomRecordatorioBuilder(context),
             SizedBox(height: 20),
 
             //Lista de Recordatorios
             Expanded(
-              child: ListView(
-                physics: BouncingScrollPhysics(),
-                children: [
-                  ...getEventsfromDay.map(
-                    (Event event) => Column(
-                      children: [
-                        Text(event.title,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: colors.titleColor,
-                                fontWeight: FontWeight.w300)),
-                        Divider(
-                          indent: 60,
-                          endIndent: 60,
-                          color: colors.titleColor.withOpacity(0.7),
+              child: FutureBuilder(
+                initialData: [],
+                future: eventsFromSelectedDay,
+                builder: (context, snapshot) {
+                  final List<Tuple2<EventId, Event>> events =
+                      snapshot.connectionState == ConnectionState.done
+                          ? snapshot.data! as List<Tuple2<EventId, Event>>
+                          : [];
+
+                  return ListView(
+                    physics: BouncingScrollPhysics(),
+                    children: [
+                      ...events.map(
+                        (Tuple2<EventId, Event> event) => Column(
+                          children: [
+                            Text(
+                              event.value2.title,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: colors.titleColor,
+                                  fontWeight: FontWeight.w300),
+                            ),
+                            Divider(
+                              indent: 60,
+                              endIndent: 60,
+                              color: colors.titleColor.withOpacity(0.7),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
             SizedBox(height: 20),
@@ -78,9 +90,9 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   TextButton bottomRecordatorioBuilder(BuildContext context) {
+    TextEditingController eventController = TextEditingController();
     final isDark = Provider.of<ThemeChangerModel>(context).isDark;
     final colors = Provider.of<ThemeChangerModel>(context);
-    final eventController = Provider.of<EventModel>(context).eventController;
     final eventModel = Provider.of<EventModel>(context);
     final languajeModel = Provider.of<LanguajeModel>(context);
 
@@ -101,6 +113,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 actionsOverflowButtonSpacing: 10,
                 actions: [
                   TextFormField(
+                    controller: eventController,
                     autofocus: true,
                     cursorColor: colors.titleColor,
                     style: TextStyle(color: colors.titleColor),
@@ -108,7 +121,6 @@ class _CalendarPageState extends State<CalendarPage> {
                       focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: colors.titleColor)),
                     ),
-                    controller: eventController,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -122,32 +134,15 @@ class _CalendarPageState extends State<CalendarPage> {
                       ),
                       TextButton(
                           onPressed: () {
-                            if (eventController.text.isEmpty) {
-                            } else {
-                              if (eventModel.selectedEvents[_selectedDay] !=
-                                  null) {
-                                eventModel.selectedEvents[_selectedDay]!.add(
-                                  Event(
-                                      date: _selectedDay,
-                                      title: eventController.text),
-                                );
-                                eventModel.addEvent(Event(
-                                    date: _selectedDay,
-                                    title: eventController.text));
-                              } else {
-                                eventModel.selectedEvents[_selectedDay] = [
-                                  Event(
-                                      date: _selectedDay,
-                                      title: eventController.text)
-                                ];
-                                eventModel.addEvent(Event(
-                                    date: _selectedDay,
-                                    title: eventController.text));
-                              }
+                            if (eventController.text.isNotEmpty) {
+                              final Event event = Event(
+                                  date: _selectedDay,
+                                  title: eventController.text);
+
+                              eventModel.addEvent(event);
                               Navigator.pop(context);
                               eventController.clear();
                               setState(() {});
-                              return;
                             }
                           },
                           child: Text("Ok",
@@ -162,9 +157,9 @@ class _CalendarPageState extends State<CalendarPage> {
                 color: colors.titleColor, fontWeight: FontWeight.w300)));
   }
 
-  TableCalendar<Event> calendarBuilder() {
+  TableCalendar<Tuple2<EventId, Event>> calendarBuilder(context) {
     final colors = Provider.of<ThemeChangerModel>(context);
-    final eventModel = Provider.of<EventModel>(context);
+    //final eventModel = Provider.of<EventModel>(context);
     final languajeModel = Provider.of<LanguajeModel>(context);
 
     return TableCalendar(
@@ -181,9 +176,10 @@ class _CalendarPageState extends State<CalendarPage> {
           });
         },
         selectedDayPredicate: (DateTime day) => isSameDay(_selectedDay, day),
-        eventLoader: (_selectedDay) =>
-            eventModel.getEventsfromDay(_selectedDay),
-
+        /*    eventLoader: (DateTime selectedDay) =>
+      
+            eventModel.getEventsByDay(selectedDay),
+ */
         //Estilos
 
         headerStyle: HeaderStyle(

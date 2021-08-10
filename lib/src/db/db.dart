@@ -49,7 +49,7 @@ class DB {
           fecha: recordatorioList[index]["fecha"]),
     );
   }
-
+/* 
    static Future<List<Recordatorio>> getByDate(
       DateTime day) async {
    
@@ -68,9 +68,9 @@ class DB {
           recordatorio: recordatoriosMap[index]["recordatorio"],
           fecha: recordatoriosMap[index]["fecha"]),
     );
-  }
+  } */
 
-  /* static Future<List<Recordatorio>> getByDate(
+  static Future<List<Recordatorio>> getByDate(
       DateTime start, DateTime end) async {
     int startSec = (start.millisecondsSinceEpoch / 1000).floor();
     int endSec = (end.millisecondsSinceEpoch / 1000).floor();
@@ -89,5 +89,5 @@ class DB {
           recordatorio: recordatoriosMap[index]["recordatorio"],
           fecha: recordatoriosMap[index]["fecha"]),
     );
-  } */
+  }
 }
