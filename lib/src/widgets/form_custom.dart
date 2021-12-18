@@ -92,12 +92,14 @@ class _FormCustomState extends State<FormCustom> {
     bool esMotivo,
   ) {
     return TextFormField(
+      maxLength: esMotivo ? 9 : 12,
       cursorColor: widget.textColor,
       style: TextStyle(color: widget.textColor),
       validator: esMotivo ? validatorMotivo : validatorMonto,
       keyboardType: type,
       controller: controller,
       decoration: InputDecoration(
+        counter: Offstage(),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: widget.colorHint)),
           focusedBorder: OutlineInputBorder(
