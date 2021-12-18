@@ -20,7 +20,7 @@ class HistorialPage extends StatelessWidget {
       backgroundColor: colors.backgroundColor,
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+          margin: EdgeInsets.only(left: 5, right: 5, top: 15),
           child: Column(
             children: [
               SizedBox(height: 30.0),
@@ -48,7 +48,7 @@ class HistorialPage extends StatelessWidget {
   Container dataTableCustom(TextStyle colorText, listaMovimiento, context) {
     final languajeModel = Provider.of<LanguajeModel>(context);
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0),
+      margin: EdgeInsets.symmetric(horizontal: 5.0),
       height: 250,
       width: double.infinity,
       child: SingleChildScrollView(
@@ -86,12 +86,16 @@ class HistorialPage extends StatelessWidget {
               : MaterialStateProperty.all(
                   Colors.green.withOpacity(colors.opacity)),
           cells: <DataCell>[
-            DataCell(Text(
-              movimiento.motivo,
-              style: isDark ? textStyle : null,
+            DataCell(Expanded(
+              child: Text(
+                movimiento.motivo,
+                style: isDark ? textStyle : null,
+              ),
             )),
-            DataCell(Text('\$' + movimiento.monto.toString(),
-                style: isDark ? textStyle : null)),
+            DataCell(Expanded(
+              child: Text('\$' + movimiento.monto.toString(),
+                  style: isDark ? textStyle : null),
+            )),
             DataCell(Text(movimiento.now, style: isDark ? textStyle : null)),
           ]);
     }).toList();
