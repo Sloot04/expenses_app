@@ -33,6 +33,7 @@ class _CalendarPageState extends State<CalendarPage> {
       body: Container(
         margin: EdgeInsets.only(left: 20, right: 20, top: 45, bottom: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TitleCustom(
               title: languajeModel.reminders,
@@ -41,8 +42,8 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
 
             calendarBuilder(),
-            bottomRecordatorioBuilder(context),
-            SizedBox(height: 20, ),
+            Expanded(child: bottomRecordatorioBuilder(context)),
+           
            
             //Lista de Recordatorios
             Expanded(
