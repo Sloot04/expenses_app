@@ -20,10 +20,9 @@ class HistorialPage extends StatelessWidget {
       backgroundColor: colors.backgroundColor,
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(left: 5, right: 5, top: 15),
+          margin: EdgeInsets.only(left: 5, right: 5, top: 45),
           child: Column(
             children: [
-              SizedBox(height: 30.0),
               TitleCustom(
                 icon: FontAwesomeIcons.book,
                 title: languajeModel.lastMovements,

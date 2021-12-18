@@ -28,10 +28,9 @@ class _SaldoPageState extends State<SaldoPage> {
       backgroundColor: appTheme.backgroundColor,
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 45),
           child: Column(
             children: [
-              SizedBox(height: 30.0),
               TitleCustom(
                 title: languajeModel.myBalance,
                 icon: FontAwesomeIcons.piggyBank,
