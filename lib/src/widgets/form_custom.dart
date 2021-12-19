@@ -39,7 +39,6 @@ class _FormCustomState extends State<FormCustom> {
     final languajeModel = Provider.of<LanguajeModel>(context);
 
     return Container(
-      // margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: Form(
         key: _formKey,
         child: Column(
@@ -52,15 +51,17 @@ class _FormCustomState extends State<FormCustom> {
             SizedBox(height: 15),
             TextButton(
               onPressed: () {
-                double monto = double.parse(_importeController.text);
-                if (!this.widget.esIngreso) {
-                  monto = monto * (-1);
+                if (_importeController.text.length >= 1) {
+                  double monto = double.parse(_importeController.text);
+                  if (!this.widget.esIngreso) {
+                    monto = monto * (-1);
+                  }
+                  Movement movement = Movement(
+                      motivo: _motivoController.text,
+                      monto: monto,
+                      now: formattedDate(DateTime.now()));
+                  movimientos.addMov(movement);
                 }
-                Movement movement = Movement(
-                    motivo: _motivoController.text,
-                    monto: monto,
-                    now: formattedDate(DateTime.now()));
-                movimientos.addMov(movement);
 
                 if (_formKey.currentState!.validate()) {
                   _motivoController.clear();
@@ -95,11 +96,12 @@ class _FormCustomState extends State<FormCustom> {
       maxLength: esMotivo ? 9 : 12,
       cursorColor: widget.textColor,
       style: TextStyle(color: widget.textColor),
-      validator: esMotivo ? validatorMotivo : validatorMonto,
+      validator: (value) =>
+          esMotivo ? validatorMotivo(value) : validatorMonto(value),
       keyboardType: type,
       controller: controller,
       decoration: InputDecoration(
-        counter: Offstage(),
+          counter: Offstage(),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: widget.colorHint)),
           focusedBorder: OutlineInputBorder(

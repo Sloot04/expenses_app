@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
             FocusScope.of(context).requestFocus(FocusNode());
           },
           child: Scaffold(
+            resizeToAvoidBottomInset: true,
             body: bottomProvider.pages[bottomProvider.currentIndex],
             bottomNavigationBar: BottomNavigationBarCustom(),
           ),
