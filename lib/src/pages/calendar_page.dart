@@ -28,12 +28,13 @@ class _CalendarPageState extends State<CalendarPage> {
     final languajeModel = Provider.of<LanguajeModel>(context);
 
     return Scaffold(
+      
       backgroundColor: colors.backgroundColor,
       body: Container(
-        margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+        margin: EdgeInsets.only(left: 20, right: 20, top: 45, bottom: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(height: 30.0),
             TitleCustom(
               title: languajeModel.reminders,
               icon: FontAwesomeIcons.clock,
@@ -41,9 +42,9 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
 
             calendarBuilder(),
-            bottomRecordatorioBuilder(context),
-            SizedBox(height: 20),
-
+            Expanded(child: bottomRecordatorioBuilder(context)),
+           
+           
             //Lista de Recordatorios
             Expanded(
               child: ListView(
@@ -68,7 +69,6 @@ class _CalendarPageState extends State<CalendarPage> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
           ],
         ),
       ),
@@ -120,16 +120,15 @@ class _CalendarPageState extends State<CalendarPage> {
                       ),
                       TextButton(
                           onPressed: () async {
-                             await DB.insert(Recordatorio(
-                                    recordatorio: eventController.text,
-                                    fecha: _selectedDay.toString()));
+                            await DB.insert(Recordatorio(
+                                recordatorio: eventController.text,
+                                fecha: _selectedDay.toString()));
                             if (eventController.text.isEmpty) {
                             } else {
                               if (selectedEvents[_selectedDay] != null) {
                                 selectedEvents[_selectedDay]!.add(
                                   Event(title: eventController.text),
                                 );
-                               
                               } else {
                                 selectedEvents[_selectedDay] = [
                                   Event(title: eventController.text)
