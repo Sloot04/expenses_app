@@ -13,6 +13,7 @@ class DB {
 
     // Make sure the directory exists
     try {
+      //all non-existing path components are created. If the directory already exists nothing is done.
       await Directory(databasePath).create(recursive: true);
     } catch (e) {
       // ignore: avoid_print
@@ -41,17 +42,20 @@ class DB {
     return database.insert("recordatorios", recordatorio.toMap());
   }
 
-  static Future<dynamic> delete(Recordatorio recordatorio) async {
+//deleting content in a table. It returns the number of rows deleted.
+  static Future<int> delete(Recordatorio recordatorio) async {
     Database database = await _openDB();
     return database
-        .delete("recordatorios", where: 'id= ?', whereArgs: [recordatorio.id]);
+        .delete("recordatorios", where: 'id = ?', whereArgs: [recordatorio.id]);
   }
 
-  static Future<dynamic> update(Recordatorio recordatorio) async {
+//updating content in a table. It returns the number of rows updated.
+  static Future<int> update(Recordatorio recordatorio) async {
     Database database = await _openDB();
     return database.update("recordatorios", recordatorio.toMap(),
         where: 'id=?', whereArgs: [recordatorio.id]);
   }
+
 //Reading a table content. It returns a list of map.
   static Future<List<Recordatorio>> getAll() async {
     Database database = await _openDB();
@@ -66,6 +70,7 @@ class DB {
           fecha: recordatoriosMap[index]["fecha"]),
     );
   }
+  
 
   static Future<dynamic> getByDate(Recordatorio recordatorio) async {
     Database database = await _openDB();
