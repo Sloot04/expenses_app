@@ -183,7 +183,7 @@ packages:
       name: sqflite_common_ffi
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0+1"
+    version: "2.1.0+2"
   sqlite3:
     dependency: transitive
     description:
@@ -239,11 +239,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< HEAD
     version: "0.4.8"
-=======
-    version: "0.4.3"
->>>>>>> 3803e7c1ea64a0b4e6acddd5ef49db70b9a5aad8
   typed_data:
     dependency: transitive
     description:
@@ -259,10 +255,5 @@ packages:
     source: hosted
     version: "2.1.1"
 sdks:
-<<<<<<< HEAD
   dart: ">=2.15.0 <3.0.0"
   flutter: ">=1.17.0"
-=======
-  dart: ">=2.14.0 <3.0.0"
-  flutter: ">=1.24.0-10"
->>>>>>> 3803e7c1ea64a0b4e6acddd5ef49db70b9a5aad8

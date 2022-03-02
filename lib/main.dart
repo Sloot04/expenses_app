@@ -13,7 +13,7 @@ import 'package:expenses_app/src/widgets/bottomNavigationBar_custom.dart';
 import 'package:expenses_app/src/model/languaje_model.dart';
 import 'package:expenses_app/src/model/event_model.dart';
 
-Future main() async {
+Future<void> main() async {
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
 

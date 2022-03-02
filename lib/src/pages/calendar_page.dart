@@ -20,6 +20,11 @@ class _CalendarPageState extends State<CalendarPage> {
   DateTime _selectedDay = DateTime.now();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colors = Provider.of<ThemeChangerModel>(context);
 
@@ -28,7 +33,10 @@ class _CalendarPageState extends State<CalendarPage> {
     final languajeModel = Provider.of<LanguajeModel>(context);
 
     return Scaffold(
-      
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        List<Recordatorio> get = await DB.getAll();
+        get.map((e) => print({e.fecha, e.id, e.recordatorio})).toList();
+      }),
       backgroundColor: colors.backgroundColor,
       body: Container(
         margin: EdgeInsets.only(left: 20, right: 20, top: 45, bottom: 20),
@@ -43,8 +51,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
             calendarBuilder(),
             Expanded(child: bottomRecordatorioBuilder(context)),
-           
-           
+
             //Lista de Recordatorios
             Expanded(
               child: ListView(
